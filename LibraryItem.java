@@ -25,9 +25,6 @@ public abstract class LibraryItem
      */
     public LibraryItem()
     {
-        this.title = "";
-        this.creator = "";
-        this.description = "";
         this.serial = nextSerial;
         nextSerial++;
     }
@@ -145,6 +142,32 @@ public abstract class LibraryItem
     public void setRecord(CheckoutRecord record)
     {
         this.record = record;
+    }
+
+    @Override 
+    public boolean equals(Object object) {
+        if (object == null || !(object instanceof LibraryItem)) {
+            return false;
+        }
+
+        LibraryItem other = (LibraryItem) object;
+        return this.serial == other.serial;
+    }
+
+    @Override
+    public String toString() {
+
+        // Replace nulls with N/A
+        String formattedTile = (title == null) ? title : "N/A";
+        String formattedCreator = (creator == null) ? creator : "N/A";
+        String formattedDescription = (description == null) ? description : "N/A";
+
+        // Print result
+        return 
+            "Title: " + formattedTile + 
+            "\nCreator: " + formattedCreator +
+            "\nSerial: " + serial + 
+            "\nDescription: " + formattedDescription;
     }
 
     private void checkForNull(Object obj, String reason)

@@ -1,3 +1,14 @@
+/**
+ * LibraryItem
+ * Represents an item that can be stored in the library catalogue.
+ * 
+ * Provides common information such as title, creator, description,
+ * serial number, and checkout status for a library item.
+ * 
+ * @author Jonathan Ganun
+ * @version 10/8/2026
+ * 
+ */
 public abstract class LibraryItem
 {
     private String title;
@@ -8,7 +19,10 @@ public abstract class LibraryItem
 
     private static int nextSerial = 0;
 
-    
+    /**
+     * Creates a new LibraryItem with empty title, creator, and description values.
+     * Assigns a unique serial number to the item.
+     */
     public LibraryItem()
     {
         this.title = "";
@@ -18,6 +32,17 @@ public abstract class LibraryItem
         nextSerial++;
     }
 
+    /**
+     * Creates a new LibraryItem with the specified title, creator,
+     * and description.
+     *
+     * @param title
+     *            the title of the library item
+     * @param creator
+     *            the creator of the library item
+     * @param description
+     *            the description of the library item
+     */
     public LibraryItem(String title, String creator, String description)
     {
         this();
@@ -26,49 +51,97 @@ public abstract class LibraryItem
         this.description = description;
     }
 
+    /**
+     * Gets the title of this library item.
+     *
+     * @return the title
+     */
     public String getTitle()
     {
         return title;
     }
 
+    /**
+     * Gets the description of this library item.
+     *
+     * @return the description
+     */
     public String getDescription()
     {
         return description;
     }
 
+    /**
+     * Gets the creator of this library item.
+     *
+     * @return the creator
+     */
     public String getCreator()
     {
         return creator;
     }
 
+    /**
+     * Gets the checkout record associated with this library item.
+     *
+     * @return the checkout record, or null if the item is not checked out
+     */
     public CheckoutRecord getRecord()
     {
         return record;
     }
 
+    /**
+     * Gets the serial number assigned to this library item.
+     *
+     * @return the serial number
+     */
     public int getSerial()
     {
         return serial;
     }
 
+    /**
+     * Sets the title of this library item.
+     *
+     * @param title - the new title
+     * @throws IllegalArgumentException if title is null
+     */
     public void setTitle(String title)
     {
         checkForNull(title, "Title cannot be null.");
         this.title = title;
     }
 
+    /**
+     * Sets the creator of this library item.
+     *
+     * @param creator - the new creator
+     * @throws IllegalArgumentException if creator is null
+     */
     public void setCreator(String creator)
     {
         checkForNull(creator, "Creator cannot be null.");
         this.creator = creator;
     }
 
+    /**
+     * Sets the description of this library item.
+     *
+     * @param description - the new description
+     * @throws IllegalArgumentException if description is null
+     */
     public void setDescription(String description)
     {
         checkForNull(description, "Description cannot be null.");
         this.description = description;
     }
 
+    /**
+     * Sets the checkout record associated with this library item.
+     *
+     * @param record - the checkout record for this item
+     */
     public void setRecord(CheckoutRecord record)
     {
         this.record = record;

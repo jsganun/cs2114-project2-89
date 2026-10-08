@@ -11,10 +11,11 @@ public class DVD extends LibraryItem
     public DVD(
         String title,
         String creator,
+        String description,
         String genre,
         int numEpisodes)
     {
-        super(title, creator);
+        super(title, creator, description);
         this.genre = genre;
         this.numEpisodes = numEpisodes;
     }

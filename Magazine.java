@@ -12,11 +12,12 @@ public class Magazine extends LibraryItem
     public Magazine(
         String title,
         String creator,
+        String description,
         String genre,
         String volume,
         String publicationDate)
     {
-        super(title, creator);
+        super(title, creator, description);
         this.genre = genre;
         this.volume = volume;
         this.publicationDate = publicationDate;

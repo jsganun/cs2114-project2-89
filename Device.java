@@ -13,12 +13,13 @@ public class Device extends LibraryItem
     public Device(
         String title,
         String creator,
+        String description,
         String operatingSystem,
         String manufacturer,
         String model,
         String deviceType)
     {
-        super(title, creator);
+        super(title, creator, description);
         this.operatingSystem = operatingSystem;
         this.manufacturer = manufacturer;
         this.model = model;

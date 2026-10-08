@@ -12,11 +12,12 @@ public class Game extends LibraryItem
     public Game(
         String title,
         String creator,
+        String description,
         String genre,
         String platform,
         String rating)
     {
-        super(title, creator);
+        super(title, creator, description);
         this.genre = genre;
         this.platform = platform;
         this.rating = rating;

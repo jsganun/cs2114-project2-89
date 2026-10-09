@@ -159,9 +159,9 @@ public class LibraryItem
     public String toString() {
 
         // Replace nulls with N/A
-        String formattedTile = (title == null) ? title : "N/A";
-        String formattedCreator = (creator == null) ? creator : "N/A";
-        String formattedDescription = (description == null) ? description : "N/A";
+        String formattedTile = (title != null) ? title : "N/A";
+        String formattedCreator = (creator != null) ? creator : "N/A";
+        String formattedDescription = (description != null) ? description : "N/A";
 
         // Print result
         return 

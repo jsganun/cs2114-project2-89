@@ -102,6 +102,7 @@ public class LibraryItemTest {
 
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test 
     public void testEquals() {
         LibraryItem anotherItem = new LibraryItem("How to Larp", "Larp Master", "A guide on how to larp your way through larping.");

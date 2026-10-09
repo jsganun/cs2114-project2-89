@@ -1,28 +1,41 @@
 package Tests;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+
+import Classes.Book;
+
 public class BookTest
 {
+    private Book harryPotter;
+
     @BeforeEach
     public void setUp()
     {
-        Book harryPotter = new Book("HarryPotter", "J.K. Rowling", "Fiction", "English", "HardCover", 200 );
+        harryPotter = new Book("HarryPotter", "J.K. Rowling", "Of the Harry Potter series.", "Fiction", "English", "HardCover", 200 );
     }
     @Test
     public void testGetGenre()
     {
-        assertEqual("Fiction", harryPotter.getGenre());
+        assertEquals("Fiction", harryPotter.getGenre());
 
     }
     @Test
-    public void testGetAuthor()
+    public void testGetLanguage()
     {
-        assertEqual("Fiction", harryPotter.getGenre());
+        assertEquals("English", harryPotter.getLanguage());
 
     }
     @Test
-    public void testGetGenre()
+    public void testGetFormat()
     {
-        assertEqual("Fiction", harryPotter.getGenre());
+        assertEquals("HardCover", harryPotter.getFormat());
 
+    }
+
+    @Test 
+    public void testGetPageCount() {
+        assertEquals(200, harryPotter.getPageCount());
     }
 }

@@ -1,3 +1,4 @@
+package Classes;
 public class Magazine extends LibraryItem
 {
     private String genre;

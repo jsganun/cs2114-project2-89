@@ -1,3 +1,4 @@
+package Classes;
 public class Game extends LibraryItem
 {
     private String genre;

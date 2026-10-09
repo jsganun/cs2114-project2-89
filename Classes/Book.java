@@ -1,3 +1,4 @@
+package Classes;
 public class Book extends LibraryItem
 {
     private String genre;
@@ -15,12 +16,13 @@ public class Book extends LibraryItem
     public Book(
         String title,
         String creator,
+        String description,
         String genre,
         String language,
         String format,
         int pageCount)
     {
-        super(title, creator);
+        super(title, creator, description);
         this.genre = genre;
         this.language = language;
         this.format = format;

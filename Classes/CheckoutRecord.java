@@ -1,3 +1,4 @@
+package Classes;
 public class CheckoutRecord
 {
     private String borrower;

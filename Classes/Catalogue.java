@@ -78,7 +78,7 @@ public class Catalogue
      */
     public LibraryItem getItem(int serial)
     {
-        if (isValidSerial(serial)) {
+        if (!isValidSerial(serial)) {
             throw new IndexOutOfBoundsException(serial +
                 " is not a valid serial number.");
         }
@@ -100,7 +100,7 @@ public class Catalogue
      */
     public CheckoutRecord getCheckoutRecord(int id)
     {
-        if (isValidID(id)) {
+        if (!isValidID(id)) {
             throw new IndexOutOfBoundsException(id +
                 " is not a valid CheckoutRecord ID number.");
         }
@@ -184,6 +184,32 @@ public class Catalogue
         records.remove(returnRecord);
         item.setRecord(null);
         return true;
+    }
+    
+    /**
+     * Adds a LibraryItem object to the LinkedChain items.
+     * @param item The LibraryItem to add.
+     * @throws IllegalArgumentException if item is null
+     */
+    public void addItem(LibraryItem item) {
+        if (item == null) {
+            throw new IllegalArgumentException(
+                "The LibraryItem argument passed to addItem is null.");
+        }
+        items.addToEnd(item);
+    }
+
+    /**
+     * Removes a LibraryItem object from the LinkedChain items.
+     * @param item The LibraryItem to remove.
+     * @throws IllegalArgumentException if item is null
+     */
+    public void removeItem(LibraryItem item) {
+        if (item == null) {
+            throw new IllegalArgumentException(
+                "The LibraryItem argument passed to removeItem is null.");
+        }
+        items.remove(item);
     }
 
     /**

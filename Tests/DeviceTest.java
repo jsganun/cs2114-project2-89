@@ -13,7 +13,7 @@ public class DeviceTest
     @BeforeEach
     public void setUp()
     {
-        Device device = new Device("Mac","Apple","Computer","Operating System", "Manufacturer", "Model", "DeviceType");
+        device = new Device("Mac","Apple","Computer","Operating System", "Manufacturer", "Model", "DeviceType");
     }
     /**
      * Tests the getManufacturer method.

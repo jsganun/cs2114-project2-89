@@ -12,10 +12,6 @@ public class Catalogue
     private LinkedChain<LibraryItem> items;
     private LinkedChain<CheckoutRecord> records;
 
-    public static void main(String[] args) {
-        // Code for prototype goes here.
-    }
-
     /**
      * Constructor initializes items and records.
      */

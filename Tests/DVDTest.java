@@ -5,50 +5,53 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import Classes.DVD;
 public class DVDTest
+{
+    private DVD dvd;
 
-    
+    @BeforeEach
+    public void setUp()
     {
-        private DVD dvd;
-        @BeforeEach
-        public void setUp()
-        {
-            DVD dvd = new DVD("Inception", "Christopher Nolan", "A mind-bending thriller", "Science Fiction", 148);
-        }
-        /**
-        * Tests the getGenre method.
-        */
-        @Test
-        public void testGetGenre()
-        {
-            assertEquals("Science Fiction", dvd.getGenre());
-    
-        }
-        /*
-        * Tests the getNumEpisodes method.
-         */
-        @Test
-        public void testGetNumEpisodes()
-        {
-            assertEquals(148, dvd.getNumEpisodes());
-    
-        }
-        /**
-         * Tests the setGenre method.
-         */
-        @Test
-        public void testSetGenre()
-        {
-            dvd.setGenre("Action");
-            assertEquals("Action", dvd.getGenre());
-    
-        }
-        /**
-         * Tests the setNumEpisodes method.
-         */
-        @Test
-        public void testSetNumEpisodes()
-        {
-            dvd.setNumEpisodes(5);
-            assertEquals(5, dvd.getNumEpisodes());
-        }
+        dvd = new DVD("Inception", "Christopher Nolan", "A mind-bending thriller", "Science Fiction", 148);
     }
+
+    /**
+    * Tests the getGenre method.
+    */
+    @Test
+    public void testGetGenre()
+    {
+        assertEquals("Science Fiction", dvd.getGenre());
+
+    }
+
+    /*
+    * Tests the getNumEpisodes method.
+        */
+    @Test
+    public void testGetNumEpisodes()
+    {
+        assertEquals(148, dvd.getNumEpisodes());
+
+    }
+
+    /**
+     * Tests the setGenre method.
+     */
+    @Test
+    public void testSetGenre()
+    {
+        dvd.setGenre("Action");
+        assertEquals("Action", dvd.getGenre());
+
+    }
+    
+    /**
+     * Tests the setNumEpisodes method.
+     */
+    @Test
+    public void testSetNumEpisodes()
+    {
+        dvd.setNumEpisodes(5);
+        assertEquals(5, dvd.getNumEpisodes());
+    }
+}

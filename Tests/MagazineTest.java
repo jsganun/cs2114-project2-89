@@ -1,6 +1,13 @@
 package Tests;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import Classes.Magazine;
 public class MagazineTest
 {
+    private Magazine magazine;
+
     @BeforeEach
     public void setUp()
     {
@@ -12,7 +19,7 @@ public class MagazineTest
     @Test
     public void testGetGenre()
     {
-        assertEqual("News", magazine.getGenre());
+        assertEquals("News", magazine.getGenre());
 
     }
     /**
@@ -21,7 +28,7 @@ public class MagazineTest
     @Test
     public void testGetVolume()
     {
-        assertEqual("Vol. 1", magazine.getVolume());
+        assertEquals("Vol. 1", magazine.getVolume());
 
     }
     /**
@@ -30,7 +37,7 @@ public class MagazineTest
     @Test
     public void testGetPublicationDate()
     {
-        assertEqual("2023-01-01", magazine.getPublicationDate());
+        assertEquals("2023-01-01", magazine.getPublicationDate());
 
     }
     /**
@@ -40,7 +47,7 @@ public class MagazineTest
     public void testSetGenre()
     {
         magazine.setGenre("Lifestyle");
-        assertEqual("Lifestyle", magazine.getGenre());
+        assertEquals("Lifestyle", magazine.getGenre());
 
     }
     /**
@@ -50,7 +57,7 @@ public class MagazineTest
     public void testSetVolume()
     {
         magazine.setVolume("Vol. 2");
-        assertEqual("Vol. 2", magazine.getVolume());
+        assertEquals("Vol. 2", magazine.getVolume());
     }
     /**
      * Tests the setPublicationDate method.
@@ -59,7 +66,7 @@ public class MagazineTest
     public void testSetPublicationDate()
     {
         magazine.setPublicationDate("2023-01-08");
-        assertEqual("2023-01-08", magazine.getPublicationDate());
+        assertEquals("2023-01-08", magazine.getPublicationDate());
     }
-    
+
 }

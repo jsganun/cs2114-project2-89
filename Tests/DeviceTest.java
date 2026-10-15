@@ -2,20 +2,18 @@
 package Tests;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
-
 import Classes.Device;
-
 public class DeviceTest
-{
+{   
     private Device device;
+    
 
     @BeforeEach
     public void setUp()
     {
-        device = new Device("Mac","Apple","Computer","Operating System", "Manufacturer", "Model", "DeviceType");
+        Device device = new Device("Mac","Apple","Computer","Operating System", "Manufacturer", "Model", "DeviceType");
     }
     /**
      * Tests the getManufacturer method.
@@ -59,7 +57,8 @@ public class DeviceTest
     @Test
     public void testSetManufacturer()
     {
-        device.setManufacturer("NewManufacturer");
+        device.setManufacturer
+        ("NewManufacturer");
         assertEquals("NewManufacturer", device.getManufacturer());
 
     }

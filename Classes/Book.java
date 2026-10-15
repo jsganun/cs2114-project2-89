@@ -11,6 +11,13 @@ public class Book extends LibraryItem
         super();
     }
     /**
+     * @param title the title of the book
+     * @param creator the creator of the book  
+     * @param description the description of the book
+     * @param genre the genre of the book
+     * @param language the language of the book
+     * @param format the format of the book
+     * @param pageCount the page count of the book
      * 
      */
     public Book(

@@ -1,4 +1,5 @@
 package Classes;
+
 /**
  * LibraryItem
  * Represents an item that can be stored in the library catalogue.
@@ -7,8 +8,7 @@ package Classes;
  * serial number, and checkout status for a library item.
  * 
  * @author Jonathan Ganun
- * @version 10/8/2026
- * 
+ * @version 10/15/2026
  */
 public class LibraryItem
 {

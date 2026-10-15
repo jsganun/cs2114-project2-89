@@ -3,50 +3,69 @@ package Tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import Classes.LibraryItem;
+import Classes.CheckoutRecord;
 
 /**
  * LibraryItemTest
  * Test class for LibraryItem
  * 
  * @author Jonathan Ganun
- * @version 10/8/2026
- * 
+ * @version 10/15/2026
  */
 public class LibraryItemTest {
     
     private LibraryItem item;
 
+    /**
+     * Sets up the test LibraryItem for each test
+     */
     @BeforeEach 
     public void setUp() {
         item = new LibraryItem("How to Larp", "Larp Master", "A guide on how to larp your way through larping.");
     }
 
+    /**
+     * Tests the getTitle() method
+     */
     @Test 
     public void testGetTitle() {
         assertEquals("How to Larp", item.getTitle());
     }
 
+    /**
+     * Tests the getDescription() method
+     */
     @Test 
     public void testGetDescription() {
         assertEquals("A guide on how to larp your way through larping.", item.getDescription());
     }
 
+    /**
+     * Tests the getCreator() method
+     */
     @Test 
     public void testGetCreator() {
         assertEquals("Larp Master", item.getCreator());
     }
 
+    /**
+     * Tests the getRecord() method
+     */
     @Test 
     public void testGetRecord() {
-        
+        assertNull(item.getRecord());
     }
 
+    /**
+     * Tests the getSerial() method
+     */
     @Test
     public void testGetSerial() {
         LibraryItem item1 = new LibraryItem();
@@ -55,6 +74,9 @@ public class LibraryItemTest {
         assertEquals(item1.getSerial() + 1, item2.getSerial());
     }
 
+    /**
+     * Tests the setTitle() method
+     */
     @Test 
     public void testSetTitle() {
         Exception exception = null;
@@ -71,6 +93,9 @@ public class LibraryItemTest {
         assertEquals("How to not larp", item.getTitle());
     }
 
+    /**
+     * Tests the setCreator() method
+     */
     @Test 
     public void testSetCreator() {
         Exception exception = null;
@@ -87,6 +112,9 @@ public class LibraryItemTest {
         assertEquals("Not Larp Master", item.getCreator());
     }
 
+    /**
+     * Tests the setDescription() method
+     */
     @Test 
     public void testSetDescription() {
         Exception exception = null;
@@ -103,11 +131,23 @@ public class LibraryItemTest {
         assertEquals("A guide on how to not larp", item.getDescription());
     }
 
+    /**
+     * Tests the setRecord() method
+     */
     @Test 
     public void testSetRecord() {
+        CheckoutRecord record = new CheckoutRecord("John", item);
 
+        item.setRecord(record);
+        assertEquals(record, item.getRecord());
+
+        item.setRecord(null);
+        assertNull(item.getRecord());
     }
 
+    /**
+     * Tests the equals() method
+     */
     @SuppressWarnings("unlikely-arg-type")
     @Test 
     public void testEquals() {
@@ -119,6 +159,9 @@ public class LibraryItemTest {
         assertTrue(item.equals(item));
     }
 
+    /**
+     * Tests the toString() method
+     */
     @Test 
     public void testToString() {
         LibraryItem blankItem = new LibraryItem();

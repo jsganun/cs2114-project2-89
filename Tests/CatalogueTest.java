@@ -27,7 +27,7 @@ import Classes.WaitlistEntry;
  * an item that is not there, duplicate copies, and the waitlist. The
  * catalogue holds items of five different subclasses at once.
  * 
- * @author Jacob Mapa (original tests); extended with Claude Code
+ * @author Jacob Mapa
  * @version October 15, 2026
  */
 public class CatalogueTest {

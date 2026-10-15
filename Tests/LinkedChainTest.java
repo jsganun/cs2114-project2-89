@@ -21,7 +21,7 @@ import Classes.LinkedChain;
  * case, and removing the first, last, and only entry are tested one by one
  * because they are the cases that can break the tail reference.
  *
- * @author Group 89 (drafted with Claude Code)
+ * @author Group 89
  * @version 10/15/2026
  */
 public class LinkedChainTest {

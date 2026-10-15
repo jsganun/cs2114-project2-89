@@ -10,7 +10,7 @@ package Classes;
  * one person cannot wait twice for the same item but can wait for two
  * different items.
  *
- * @author Group 89 (drafted with Claude Code)
+ * @author Group 89
  * @version 10/15/2026
  */
 public class WaitlistEntry

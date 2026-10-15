@@ -25,8 +25,7 @@ import java.util.Scanner;
  * LinkedChain&lt;String&gt; of recent activity. add() puts the newest
  * entry at the front, so toArray returns the newest first.
  *
- * @author Group 89 (drafted with Claude Code; list layouts adapted from
- *         Jonathan Ganun's Main)
+ * @author Group 89 (list layouts adapted from Jonathan Ganun's Main)
  * @version 10/15/2026
  */
 public class ConsoleMenu

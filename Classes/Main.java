@@ -9,8 +9,7 @@ import java.util.Scanner;
  *
  * To run: java Classes.Main (see the README for the full commands).
  *
- * @author Jonathan Ganun (sample catalogue); menu hand-off revised with
- *         Claude Code
+ * @author Jonathan Ganun (sample catalogue)
  * @version 10/15/2026
  */
 public class Main {

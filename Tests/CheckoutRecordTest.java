@@ -23,8 +23,7 @@ import Classes.LinkedChain;
  * serial, and an item has no serial until a Catalogue adds it, so the
  * fixtures add their items to a Catalogue first.
  *
- * @author Ajeet Bondugula (original tests); revised with Claude Code for
- *         the serial-based record
+ * @author Ajeet Bondugula
  * @version 10/15/2026
  *
  */

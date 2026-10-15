@@ -35,7 +35,7 @@ import Classes.Magazine;
  * with no matches, garbage text, repeated adds, and a closed input
  * stream.
  *
- * @author Group 89 (drafted with Claude Code)
+ * @author Group 89
  * @version 10/15/2026
  */
 public class ConsoleMenuTest {

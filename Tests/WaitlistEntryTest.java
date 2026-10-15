@@ -15,7 +15,7 @@ import Classes.WaitlistEntry;
  * Test class for WaitlistEntry (stretch goal: waitlist). Each public
  * method has a normal case and a bad-input case.
  *
- * @author Group 89 (drafted with Claude Code)
+ * @author Group 89
  * @version 10/15/2026
  */
 public class WaitlistEntryTest {

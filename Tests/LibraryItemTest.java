@@ -17,7 +17,7 @@ import Classes.LibraryItem;
  * small stub subclass. An item has serial 0 until a Catalogue adds it,
  * so tests that need a serial add the item to a Catalogue.
  *
- * @author Jonathan Ganun (original tests); revised with Claude Code
+ * @author Jonathan Ganun
  * @version 10/15/2026
  */
 public class LibraryItemTest {

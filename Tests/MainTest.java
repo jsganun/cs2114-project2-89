@@ -24,7 +24,7 @@ import Classes.Main;
  * Tests Main: the sample catalogue it builds, and that the program starts,
  * shows the menu, and exits cleanly on typed input or on none.
  *
- * @author Group 89 (drafted with Claude Code)
+ * @author Group 89
  * @version 10/15/2026
  */
 public class MainTest {

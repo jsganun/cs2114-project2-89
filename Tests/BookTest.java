@@ -11,7 +11,7 @@ public class BookTest
     @BeforeEach
     public void setUp()
     {
-        Book harryPotter = new Book("HarryPotter", "J.K. Rowling", "Fiction", "English", "HardCover", 200 );
+        Book harryPotter = new Book("HarryPotter", "J.K. Rowling","A magical world", "Fiction", "English", "HardCover", 200 );
     }
     @Test
     public void testGetGenre()

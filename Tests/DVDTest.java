@@ -20,7 +20,7 @@ public class DVDTest
         @Test
         public void testGetGenre()
         {
-            assertEqual("Science Fiction", dvd.getGenre());
+            assertEquals("Science Fiction", dvd.getGenre());
     
         }
         /*
@@ -29,7 +29,7 @@ public class DVDTest
         @Test
         public void testGetNumEpisodes()
         {
-            assertEqual(148, dvd.getNumEpisodes());
+            assertEquals(148, dvd.getNumEpisodes());
     
         }
         /**
@@ -39,7 +39,7 @@ public class DVDTest
         public void testSetGenre()
         {
             dvd.setGenre("Action");
-            assertEqual("Action", dvd.getGenre());
+            assertEquals("Action", dvd.getGenre());
     
         }
         /**
@@ -49,6 +49,6 @@ public class DVDTest
         public void testSetNumEpisodes()
         {
             dvd.setNumEpisodes(5);
-            assertEqual(5, dvd.getNumEpisodes());
+            assertEquals(5, dvd.getNumEpisodes());
         }
     }

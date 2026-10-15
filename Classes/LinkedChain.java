@@ -11,9 +11,15 @@ package Classes;
  * with add() come back from toArray() in reverse order of insertion.
  * addToEnd() preserves insertion order.
  *
+ * Group 89 changes to the provided chain (see README "Reflection"):
+ *   - a tail reference (lastNode) so addToEnd is O(1), because Catalogue
+ *     appends on every add;
+ *   - add(null) and addToEnd(null) return false and leave the chain
+ *     unchanged, as the spec's Generic Contract promises.
+ *
  * Time complexity, where n is the number of entries:
  *   add              O(1)
- *   addToEnd         O(n)
+ *   addToEnd         O(1)
  *   remove()         O(1)
  *   remove(T)        O(n)
  *   clear            O(1)
@@ -25,13 +31,15 @@ package Classes;
  *   toArray          O(n)
  *
  * @author CS 2114 Staff
- * @version September 2026
+ * @author Group 89 (tail reference and null handling)
+ * @version October 2026
  *
  * @param <T> the type of entries stored in the chain
  */
 public class LinkedChain<T>
 {
     private Node<T> firstNode;   // reference to the first node, or null
+    private Node<T> lastNode;    // reference to the last node, or null
     private int numberOfEntries; // number of nodes in the chain
 
     /**
@@ -40,20 +48,27 @@ public class LinkedChain<T>
     public LinkedChain()
     {
         firstNode = null;
+        lastNode = null;
         numberOfEntries = 0;
     }
 
     /**
      * Adds a new entry to the front of this chain.
      *
-     * @param newEntry the object to be added; must not be null
-     * @return true
-     * @throws IllegalArgumentException if newEntry is null
+     * @param newEntry the object to be added
+     * @return true if the entry was added, or false if newEntry is null
      */
     public boolean add(T newEntry)
     {
-        requireNonNull(newEntry);
+        if (newEntry == null)
+        {
+            return false;
+        }
         firstNode = new Node<T>(newEntry, firstNode);
+        if (lastNode == null)
+        {
+            lastNode = firstNode;
+        }
         numberOfEntries++;
         return true;
     }
@@ -61,13 +76,15 @@ public class LinkedChain<T>
     /**
      * Adds a new entry to the end of this chain.
      *
-     * @param newEntry the object to be added; must not be null
-     * @return true
-     * @throws IllegalArgumentException if newEntry is null
+     * @param newEntry the object to be added
+     * @return true if the entry was added, or false if newEntry is null
      */
     public boolean addToEnd(T newEntry)
     {
-        requireNonNull(newEntry);
+        if (newEntry == null)
+        {
+            return false;
+        }
         Node<T> newNode = new Node<T>(newEntry);
         if (firstNode == null)
         {
@@ -75,13 +92,9 @@ public class LinkedChain<T>
         }
         else
         {
-            Node<T> current = firstNode;
-            while (current.next != null)
-            {
-                current = current.next;
-            }
-            current.next = newNode;
+            lastNode.next = newNode;
         }
+        lastNode = newNode;
         numberOfEntries++;
         return true;
     }
@@ -99,6 +112,10 @@ public class LinkedChain<T>
         }
         T result = firstNode.data;
         firstNode = firstNode.next;
+        if (firstNode == null)
+        {
+            lastNode = null;
+        }
         numberOfEntries--;
         return result;
     }
@@ -118,6 +135,10 @@ public class LinkedChain<T>
         if (anEntry.equals(firstNode.data))
         {
             firstNode = firstNode.next;
+            if (firstNode == null)
+            {
+                lastNode = null;
+            }
             numberOfEntries--;
             return true;
         }
@@ -128,6 +149,10 @@ public class LinkedChain<T>
             if (anEntry.equals(current.data))
             {
                 previous.next = current.next;
+                if (current == lastNode)
+                {
+                    lastNode = previous;
+                }
                 numberOfEntries--;
                 return true;
             }
@@ -143,6 +168,7 @@ public class LinkedChain<T>
     public void clear()
     {
         firstNode = null;
+        lastNode = null;
         numberOfEntries = 0;
     }
 
@@ -280,20 +306,6 @@ public class LinkedChain<T>
         }
         sb.append("]");
         return sb.toString();
-    }
-
-    /**
-     * Rejects null entries.
-     *
-     * @param entry the entry to check
-     * @throws IllegalArgumentException if entry is null
-     */
-    private void requireNonNull(T entry)
-    {
-        if (entry == null)
-        {
-            throw new IllegalArgumentException("Cannot add null to chain");
-        }
     }
 
     /**

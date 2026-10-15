@@ -1,19 +1,20 @@
 package Classes;
 /**
  * CheckoutRecord
- * Represents one active loan: which LibraryItem is out and who has it.
+ * Represents one active loan: the serial of the LibraryItem that is out
+ * and who has it.
  *
  * A record owns the facts of a single loan and knows nothing about the
- * catalogue or the chains. Each copy of an item gets its own record, so
+ * catalogue or the chains. Each copy of an item has its own serial, so
  * one person can hold two copies of the same title. Two records are
- * equal when the serials of their items match.
+ * equal when their serials match.
  *
- * Validation lives here as a backstop: no record can hold a null item
- * or a null, blank, or over-100-character borrower name, no matter who
- * calls the constructor or setters.
+ * Validation lives here as a backstop: no record can hold a serial that
+ * is not positive or a null, blank, or over-100-character borrower
+ * name, no matter who calls the constructor or setter.
  *
  * @author Ajeet Bondugula
- * @version 10/14/2026
+ * @version 10/15/2026
  *
  */
 public class CheckoutRecord
@@ -21,51 +22,44 @@ public class CheckoutRecord
     /** The longest borrower name a record will accept. */
     public static final int MAX_BORROWER_LENGTH = 100;
 
+    /** The serial of the item on loan. Positive and never changes. */
+    private final int serial;
     /** The name of the person who has the item. */
     private String borrower;
-    /** A unique, chronologically assigned ID number for this record. */
-    private int id;
-    /** The library item on loan. */
-    private LibraryItem item;
-
-    /** The ID number the next record created will receive. */
-    private static int nextId = 1;
-
-    /**
-     * Creates a blank CheckoutRecord with no borrower or linked
-     * LibraryItem. Assigns a unique ID number to the record.
-     */
-    public CheckoutRecord()
-    {
-        this.id = nextId;
-        nextId++;
-    }
 
     /**
      * Creates a new CheckoutRecord for the given borrower and item.
-     * Assigns a unique ID number to the record.
+     * The record keeps the item's serial, not the item itself.
      *
      * @param borrower
      *            the name of the person borrowing the item
      * @param item
-     *            the library item being borrowed
+     *            the library item being borrowed; must already have a
+     *            serial from a Catalogue
      * @throws IllegalArgumentException if borrower is null, blank, or
-     *         over 100 characters, or if item is null
+     *         over 100 characters, if item is null, or if item has no
+     *         serial yet
      */
     public CheckoutRecord(String borrower, LibraryItem item)
     {
-        checkBorrower(borrower);
-        checkItem(item);
+        validateBorrower(borrower);
+        if (item == null)
+        {
+            throw new IllegalArgumentException("Item cannot be null");
+        }
+        if (item.getSerial() <= 0)
+        {
+            throw new IllegalArgumentException(
+                "Item must be added to the catalogue before it is borrowed");
+        }
         this.borrower = borrower;
-        this.item = item;
-        this.id = nextId;
-        nextId++;
+        this.serial = item.getSerial();
     }
 
     /**
      * Gets the name of the borrower on this record.
      *
-     * @return the borrower, or null for a blank record
+     * @return the borrower
      */
     public String getBorrower()
     {
@@ -75,35 +69,11 @@ public class CheckoutRecord
     /**
      * Gets the serial number of the LibraryItem on loan.
      *
-     * @return the item's serial, or -1 if no item is linked
+     * @return the item's serial, always positive
      */
     public int getSerial()
     {
-        if (item == null)
-        {
-            return -1;
-        }
-        return item.getSerial();
-    }
-
-    /**
-     * Gets the LibraryItem on loan.
-     *
-     * @return the item, or null for a blank record
-     */
-    public LibraryItem getItem()
-    {
-        return item;
-    }
-
-    /**
-     * Gets the unique ID number of this record.
-     *
-     * @return the ID number
-     */
-    public int getId()
-    {
-        return id;
+        return serial;
     }
 
     /**
@@ -115,26 +85,13 @@ public class CheckoutRecord
      */
     public void setBorrower(String borrower)
     {
-        checkBorrower(borrower);
+        validateBorrower(borrower);
         this.borrower = borrower;
     }
 
     /**
-     * Sets the LibraryItem on this record.
-     *
-     * @param item - the new library item
-     * @throws IllegalArgumentException if item is null; the old item
-     *         is kept
-     */
-    public void setItem(LibraryItem item)
-    {
-        checkItem(item);
-        this.item = item;
-    }
-
-    /**
-     * Two records are equal when both are linked to an item and the
-     * items' serials match. A blank record is only equal to itself.
+     * Two records are equal when their serials match, whoever the
+     * borrower is.
      *
      * @param object the object to compare against
      * @return true if object is a CheckoutRecord for the same serial
@@ -146,64 +103,45 @@ public class CheckoutRecord
         {
             return true;
         }
-        if (object == null || !(object instanceof CheckoutRecord))
+        if (!(object instanceof CheckoutRecord))
         {
             return false;
         }
-
-        CheckoutRecord other = (CheckoutRecord) object;
-        if (this.item == null || other.item == null)
-        {
-            return false;
-        }
-        return this.getSerial() == other.getSerial();
+        return this.serial == ((CheckoutRecord) object).serial;
     }
 
     /**
      * Returns a hash code consistent with equals.
      *
-     * @return the item's serial, or the record ID for a blank record
+     * @return the serial
      */
     @Override
     public int hashCode()
     {
-        if (item == null)
-        {
-            return id;
-        }
-        return getSerial();
+        return serial;
     }
 
     /**
-     * Returns a readable description of this record: its ID, the serial
-     * of the item on loan, and the borrower. Missing values print as N/A.
+     * Returns a readable description of this record: the serial of the
+     * item on loan and the borrower.
      *
      * @return a string representation of this record
      */
     @Override
     public String toString()
     {
-        // Replace nulls with N/A
-        String formattedBorrower = (borrower != null) ? borrower : "N/A";
-        String formattedSerial = (item != null)
-            ? String.valueOf(getSerial())
-            : "N/A";
-
-        // Print result
-        return
-            "Record: " + id +
-            "\nSerial: " + formattedSerial +
-            "\nBorrower: " + formattedBorrower;
+        return "Item " + serial + " is checked out to " + borrower + ".";
     }
 
     /**
-     * Rejects a borrower name that is null, blank, or too long.
+     * Rejects a borrower name that is null, blank, or too long. Shared
+     * with Catalogue and WaitlistEntry so every class applies the same rule.
      *
      * @param name the borrower name to check
      * @throws IllegalArgumentException if name is null, blank, or over
      *         100 characters
      */
-    private void checkBorrower(String name)
+    static void validateBorrower(String name)
     {
         if (name == null || name.trim().isEmpty())
         {
@@ -213,20 +151,6 @@ public class CheckoutRecord
         {
             throw new IllegalArgumentException(
                 "Borrower name is over 100 characters");
-        }
-    }
-
-    /**
-     * Rejects a null library item.
-     *
-     * @param libraryItem the item to check
-     * @throws IllegalArgumentException if libraryItem is null
-     */
-    private void checkItem(LibraryItem libraryItem)
-    {
-        if (libraryItem == null)
-        {
-            throw new IllegalArgumentException("Item cannot be null");
         }
     }
 }

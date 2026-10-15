@@ -2,36 +2,46 @@ package Classes;
 
 import java.util.Scanner;
 
+/**
+ * Main
+ * Builds a sample Catalogue, hands it to a ConsoleMenu, and runs it.
+ * All reading and printing happens in ConsoleMenu.
+ *
+ * To run: java Classes.Main (see the README for the full commands).
+ *
+ * @author Jonathan Ganun (sample catalogue); menu hand-off revised with
+ *         Claude Code
+ * @version 10/15/2026
+ */
 public class Main {
-    
-    private static Catalogue catalogue;
-    private static Scanner input;
-    private static boolean running;
 
+    /**
+     * Starts LibCatS with the sample catalogue and the keyboard and
+     * screen as input and output.
+     *
+     * @param args not used
+     */
     public static void main(String[] args) {
-
-        // Create sample catalogue
-        catalogue = createSampleCatalogue();
-        
-        // Instantiate input
-        input = new Scanner(System.in);
-
-        // Begin prototype program
-        run();
+        Catalogue catalogue = createSampleCatalogue();
+        ConsoleMenu menu = new ConsoleMenu(catalogue, new Scanner(System.in),
+            System.out);
+        menu.run();
     }
 
     /**
      * Creates a sample catalogue for prototyping purposes
      * @return a sample catalogue
      */
-    private static Catalogue createSampleCatalogue() {
+    public static Catalogue createSampleCatalogue() {
         // Create the catalogue object
         Catalogue catalogue = new Catalogue();
 
         // Load sample items into the catalogue
-        catalogue.addItem(new Book("The Hobbit", "J.R.R. Tolkien",
+        Book hobbit = new Book("The Hobbit", "J.R.R. Tolkien",
             "A fantasy adventure in Middle-earth.", "Fantasy", "English",
-            "Hardcover", 310));
+            "Hardcover", 310);
+        hobbit.setIsbn("978-0-547-92822-7");
+        catalogue.addItem(hobbit);
         catalogue.addItem(new Book("Kindred", "Octavia E. Butler",
             "A science-fiction novel about time travel and family.",
             "Science Fiction", "English", "Paperback", 264));
@@ -57,9 +67,11 @@ public class Main {
             "A mythological action game about escaping the underworld.",
             "Roguelike", "PlayStation 5", "T"));
 
-        catalogue.addItem(new Magazine("National Geographic", "Susan Goldberg",
+        Magazine natGeo = new Magazine("National Geographic", "Susan Goldberg",
             "A magazine covering science, exploration, and culture.",
-            "Science", "Vol. 245, No. 3", "March 2024"));
+            "Science", "Vol. 245, No. 3", "March 2024");
+        natGeo.setDateOfIssue("2024-03-01");
+        catalogue.addItem(natGeo);
         catalogue.addItem(new Magazine("Smithsonian", "Kevin Gover",
             "A magazine about history, science, and the arts.",
             "Culture", "Vol. 54, No. 8", "November 2023"));
@@ -91,142 +103,5 @@ public class Main {
         
         // Return the sample catalogue
         return catalogue;
-    }
-
-    private static void run() {
-        running = false; // Turn to true after, this is to prevent while true loop for now.
-
-        while (running) {
-            System.out.println("Select an option:");
-            System.out.println("[1] Show all catalogue entries");
-            System.out.println("[2] Show all returned catalogue entries");
-            System.out.println("[3] Show all borrowed catalogue entries");
-            System.out.println("[4] Show all checkout records");
-            System.out.println("[5] Add a new item to the catalogue");
-            System.out.println("[6] Remove an item from the catalogue");
-            System.out.println("[7] Show All Catalogue Entries");
-            System.out.println("[8] Show All Catalogue Entries");
-
-        }
-    }
-
-    private static void showWholeCatalogue() {
-        LibraryItem[] allItems = catalogue.getAllItems();
-
-        if (allItems.length == 0) {
-            System.out.println(
-                "--------------------------------------------------\n" +
-                "There are no items in the catalogue!\n" +
-                "--------------------------------------------------"
-            );
-        }
-        else {
-            System.out.println("--------------------------------------------------");
-            System.out.println("|               All Catalogue Items              |");
-            System.out.println("--------------------------------------------------");
-            for (int i = 0; i < allItems.length; i++) {
-                LibraryItem item = allItems[i];
-                System.out.println(item);
-                if (i + 1 != allItems.length) {
-                    System.out.println("\n");
-                }
-            }
-            System.out.println("--------------------------------------------------");
-        }
-    }
-
-    private static void showReturnedCatalogue() {
-        LibraryItem[] returnedItems = catalogue.getAllReturnedItems();
-
-        if (returnedItems.length == 0) {
-            System.out.println(
-                "--------------------------------------------------\n" +
-                "There are no returned items in the catalogue!\n" +
-                "--------------------------------------------------"
-            );
-        }
-        else {
-            System.out.println("--------------------------------------------------");
-            System.out.println("|               All Returned Items               |");
-            System.out.println("--------------------------------------------------");
-            for (int i = 0; i < returnedItems.length; i++) {
-                LibraryItem item = returnedItems[i];
-                System.out.println(item);
-                if (i + 1 != returnedItems.length) {
-                    System.out.println("\n");
-                }
-            }
-            System.out.println("--------------------------------------------------");
-        }
-    }
-
-    private static void showBorrowedCatalogue() {
-        LibraryItem[] borrowedItems = catalogue.getAllBorrowedItems();
-
-        if (borrowedItems.length == 0) {
-            System.out.println(
-                "--------------------------------------------------\n" +
-                "There are no borrowed items in the catalogue!\n" +
-                "--------------------------------------------------"
-            );
-        }
-        else {
-            System.out.println("--------------------------------------------------");
-            System.out.println("|               All Borrowed Items               |");
-            System.out.println("--------------------------------------------------");
-            for (int i = 0; i < borrowedItems.length; i++) {
-                LibraryItem item = borrowedItems[i];
-                System.out.println(item);
-                if (i + 1 != borrowedItems.length) {
-                    System.out.println("\n");
-                }
-            }
-            System.out.println("--------------------------------------------------");
-        }
-    }
-
-    private static void showCheckoutRecords() {
-        CheckoutRecord[] records = catalogue.getAllCheckoutRecords();
-
-        if (records.length == 0) {
-            System.out.println(
-                "--------------------------------------------------\n" +
-                "There are no checkout records!\n" +
-                "--------------------------------------------------"
-            );
-        }
-        else {
-            System.out.println("--------------------------------------------------");
-            System.out.println("|                Checkout Records                |");
-            System.out.println("--------------------------------------------------");
-            for (int i = 0; i < records.length; i++) {
-                CheckoutRecord record = records[i];
-                System.out.println(record);
-                if (i + 1 != records.length) {
-                    System.out.println("\n");
-                }
-            }
-            System.out.println("--------------------------------------------------");
-        }
-    }
-
-    private static void addItem() {
-
-    }
-
-    private static void removeItem() {
-
-    }
-
-    private static void borrowItem() {
-
-    }
-
-    private static void returnItem() {
-
-    }
-
-    private static void exit() {
-        System.exit(0);
     }
 }

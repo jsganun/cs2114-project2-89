@@ -262,5 +262,5 @@ Each member's own contributions are described in the separate contributions docu
 ## GenAI note
 
 * Jonathan used **Microsoft Copilot** for boilerplate, JavaDocs and debugging tests. Ajeet used **Claude** to draft parts of the specification and to refine the `CheckoutRecord` tests.
-* After the first build, **Claude Code** was used to ompare it with our scope and specification, and make the revisions listed above, including `ConsoleMenu`, `WaitlistEntry` and some added tests. All 236 tests were run and pass.
+* After the first build, **Claude Code** was used to compare it with our scope and specification, and make the revisions listed above, including `ConsoleMenu`, `WaitlistEntry` and some added tests. All 236 tests were run and pass.
 * Decisions that need the group's agreement: following the spec's convention (not its method table) for `borrowItem` and `returnItem`; the committed and dropped stretch goals; and the owners in Responsibilities. Everyone should read the files they own before the grading session.

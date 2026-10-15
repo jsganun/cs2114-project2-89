@@ -5,16 +5,15 @@ package Classes;
  * Generates CheckoutRecord objects for available LibraryItem objects.
  * 
  * @author Jacob Mapa (jmapa26)
- * @version October 8, 2026
+ * @version October 15, 2026
  */
-
 public class Catalogue
 {
     private LinkedChain<LibraryItem> items;
     private LinkedChain<CheckoutRecord> records;
 
     public static void main(String[] args) {
-        // No idea of what to put in here.
+        // Code for prototype goes here.
     }
 
     /**
@@ -30,12 +29,14 @@ public class Catalogue
      * Returns an array of LibraryItem objects with an
      * equivalent title as the value of the String argument.
      * @param title The title being searched for.
-     * @return An array of LibraryItem objects with the same title.
+     * @return An array of LibraryItem objects with the given title.
+     * @throws if title is null
      */
     public LibraryItem[] getItemsByTitle(String title)
     {
         if (title == null) {
-            throw new IllegalArgumentException("The String argument passed to getItemsByTitle is null.");
+            throw new IllegalArgumentException(
+                "The String argument passed to getItemsByTitle is null.");
         }
         LinkedChain<LibraryItem> itemsByTitle = new LinkedChain<>();
         for (int i = 0; i < items.size(); i++) {
@@ -43,15 +44,21 @@ public class Catalogue
                 itemsByTitle.add(items.get(i));
             }
         }
-
-        LibraryItem[] arr = new LibraryItem[itemsByTitle.size()];
-        return itemsByTitle.toArray(arr);
+        return itemsByTitle.toArray(new LibraryItem[itemsByTitle.size()]);
     }
 
+    /**
+     * Returns an array of LibraryItem objects with an
+     * equivalent creator as the value of the String argument.
+     * @param creator The creator being searched for.
+     * @return An array of LibraryItem objects with the given creator.
+     * @throws IllegalArgumentException if creator is null
+     */
     public LibraryItem[] getItemsByCreator(String creator)
     {
         if (creator == null) {
-            throw new IllegalArgumentException("The String argument passed to getItemsByCreator is null.");
+            throw new IllegalArgumentException(
+                "The String argument passed to getItemsByCreator is null.");
         }
         LinkedChain<LibraryItem> itemsByCreator = new LinkedChain<>();
         for (int i = 0; i < items.size(); i++) {
@@ -59,91 +66,187 @@ public class Catalogue
                 itemsByCreator.add(items.get(i));
             }
         }
-
-        LibraryItem[] arr = new LibraryItem[itemsByCreator.size()];
-        return itemsByCreator.toArray(arr);
+        return itemsByCreator.toArray(new LibraryItem[itemsByCreator.size()]);
     }
 
+    /**
+     * Returns a LibraryItem object whose serial is
+     * the value of the int argument.
+     * @param serial The serial of the LibraryItem being searched for.
+     * @return The LibraryItem with the serial.
+     * @throws IndexOutOfBoundsException if the serial doesn't exist
+     */
     public LibraryItem getItem(int serial)
     {
-        // This method's code has problems that require consideration.
-        
-        if (serial < 0 || serial > items.size()) {
-            throw new IndexOutOfBoundsException(serial + " is not a valid serial number.");
+        if (!isValidSerial(serial)) {
+            throw new IndexOutOfBoundsException(serial +
+                " is not a valid serial number.");
         }
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getSerial() == serial) {
                 return items.get(i);
             }
         }
-
-        // TODO: what would this do if the object with this serial number was removed?
         return null;
+        // This line is added to avoid compilation error, but logically
+        // it should never be reached if the serial is valid.
     }
 
+    /**
+     * Returns a CheckoutRecord object given its ID number.
+     * @param id The CheckoutRecord object's ID number.
+     * @return The CheckoutRecord object with the serial.
+     * @throws IndexOutOfBoundsException if the ID doesn't exist.
+     */
     public CheckoutRecord getCheckoutRecord(int id)
     {
-        // This method's code has problems that require consideration.
-        
-        if (id < 0 || id > records.size()) {
-            throw new IndexOutOfBoundsException(id + " is not a valid CheckoutRecord ID number.");
+        if (!isValidID(id)) {
+            throw new IndexOutOfBoundsException(id +
+                " is not a valid CheckoutRecord ID number.");
         }
-        //for (int i = 0; i < records.size()
-
+        for (int i = 0; i < records.size(); i++) {
+            if (records.get(i).getId() == id) {
+                return records.get(i);
+            }
+        }
         return null;
+        // This line is added to avoid compilation error, but logically
+        // it should never be reached if the ID is valid.
     }
 
+    /**
+     * Returns an array of CheckoutRecord objects
+     * given a String argument representing the borrower.
+     * @param borrower The name of the borrower of the LibraryItem.
+     * @return An array of CheckoutRecord objects with the given borrower.
+     * @throws IllegalArgumentException if borrower is null
+     */
     public CheckoutRecord[] getCheckoutRecords(String borrower)
     {
+        if (borrower == null) {
+            throw new IllegalArgumentException(
+                "The String argument passed to getCheckoutRecords is null.");
+        }
         LinkedChain<CheckoutRecord> recordsForBorrower = new LinkedChain<>();
         for (int i = 0; i < records.size(); i++) {
             if (records.get(i).getBorrower().equals(borrower)) {
                 recordsForBorrower.add(records.get(i));
             }
         }
-
-        CheckoutRecord[] arr = new CheckoutRecord[recordsForBorrower.size()];
-        return recordsForBorrower.toArray(arr);
+        return recordsForBorrower.toArray(new CheckoutRecord[recordsForBorrower.size()]);
     }
 
-    public boolean borrow(LibraryItem item, String borrower)
+    /**
+     * Creates a CheckoutRecord object given item and borrower arguments
+     * and updates the corresponding LibraryItem object accordingly.
+     * @param item The LibraryItem being borrowed.
+     * @param borrower The person borrowing the LibraryItem.
+     * @return false if the LibraryItem object already has an associated
+     *         CheckoutRecord object, and true otherwise.
+     * @throws IllegalArgumentException if item or borrower is null
+     */
+    public boolean borrowItem(LibraryItem item, String borrower)
     {
-        // This method's code has problems that require consideration.
-        
-        if (item == null || !items.contains(item) || !recordsHaveItem(item)) {
-            // What to do here?
+        if (item == null || borrower == null) {
+            throw new IllegalArgumentException(
+                "At least one of the arguments passed to borrowItem is null.");
+        }
+        if (!items.contains(item) ||
+            item.getRecord() != null &&
+            records.contains(item.getRecord())) {
             return false;
         }
         CheckoutRecord borrowRecord = new CheckoutRecord(borrower, item);
-        item.setRecord(borrowRecord);
         records.add(borrowRecord);
+        item.setRecord(borrowRecord);
         return true;
     }
 
+    /**
+     * Removes the associated CheckoutRecord reference in the LibraryItem.
+     * @param item The LibraryItem being returned.
+     * @return false if the LibraryItem object does not already have an
+     *         associated CheckoutRecord object, and true otherwise.
+     * @throws IllegalArgumentException if item is null
+     */
     public boolean returnItem(LibraryItem item)
     {
-        // This method's code has problems that require consideration.
-        
-        if (item == null || items.contains(item) || recordsHaveItem(item)) {
-            // What to do here?
+        if (item == null) {
+            throw new IllegalArgumentException(
+                "The LibraryItem argument passed to returnItem is null.");
+        }
+        if (!items.contains(item) ||
+            item.getRecord() == null ||
+            !records.contains(item.getRecord())) {
             return false;
         }
+        CheckoutRecord returnRecord = item.getRecord();
+        records.remove(returnRecord);
         item.setRecord(null);
-        // Do I remove the CheckoutRecord object from the LinkedChain records?
         return true;
     }
+    
+    /**
+     * Adds a LibraryItem object to the LinkedChain items.
+     * @param item The LibraryItem to add.
+     * @throws IllegalArgumentException if item is null
+     */
+    public void addItem(LibraryItem item) {
+        if (item == null) {
+            throw new IllegalArgumentException(
+                "The LibraryItem argument passed to addItem is null.");
+        }
+        items.addToEnd(item);
+    }
 
-    private boolean recordsHaveItem(LibraryItem item) {
-        CheckoutRecord[] arr = new CheckoutRecord[records.size()];
-        arr = records.toArray(arr);
+    /**
+     * Removes a LibraryItem object from the LinkedChain items.
+     * @param item The LibraryItem to remove.
+     * @throws IllegalArgumentException if item is null
+     */
+    public void removeItem(LibraryItem item) {
+        if (item == null) {
+            throw new IllegalArgumentException(
+                "The LibraryItem argument passed to removeItem is null.");
+        }
+        items.remove(item);
+    }
 
-        for (int i = 0; i < arr.length; i++) {
-            CheckoutRecord record = arr[i];
-            if (record.getItem() != null && record.getItem().equals(item)) {
+    /**
+     * Sees whether the serial is associated with
+     * a LibraryItem object in the LinkedChain items.
+     * @param serial The serial of the potential LibraryItem
+     * @return false if serial is negative or is not associated
+     *         with a LibraryItem object, true otherwise.
+     */
+    private boolean isValidSerial(int serial) {
+        if (serial < 0) {
+            return false;
+        }
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getSerial() == serial) {
                 return true;
             }
         }
+        return false;
+    }
 
+    /**
+     * Sees whether the ID is associated with
+     * a CheckoutRecord object in the LinkedChain records.
+     * @param id The ID number of the potential CheckoutRecord
+     * @return false if id is negative or is not associated
+     *         with a CheckoutRecord object, true otherwise.
+     */
+    private boolean isValidID(int id) {
+        if (id < 0) {
+            return false;
+        }
+        for (int i = 0; i < records.size(); i++) {
+            if (records.get(i).getId() == id) {
+                return true;
+            }
+        }
         return false;
     }
 }

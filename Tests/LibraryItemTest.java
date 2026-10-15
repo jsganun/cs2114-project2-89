@@ -1,5 +1,6 @@
 package Tests;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,11 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.junit.jupiter.api.BeforeEach;
-
 import Classes.LibraryItem;
 
-
+/**
+ * LibraryItemTest
+ * Test class for LibraryItem
+ * 
+ * @author Jonathan Ganun
+ * @version 10/8/2026
+ * 
+ */
 public class LibraryItemTest {
     
     private LibraryItem item;

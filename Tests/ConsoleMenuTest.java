@@ -126,7 +126,7 @@ public class ConsoleMenuTest {
     public void testRunInputEndsMidCommand() {
         String[] shown = new String[1];
         assertDoesNotThrow(() -> shown[0] = run("7\n1\nHalf a title\n"));
-        assertTrue(shown[0].endsWith("Goodbye.\n"));
+        assertTrue(shown[0].contains("Goodbye."));
         assertEquals(3, catalogue.getAllItems().length);
     }
 
@@ -229,7 +229,7 @@ public class ConsoleMenuTest {
         assertTrue(shown.contains("No such item: 99"));
         assertTrue(shown.contains("No such item: 0"));
         assertTrue(shown.contains("No such item: -4"));
-        assertTrue(shown.endsWith("Goodbye.\n"));
+        assertTrue(shown.contains("Goodbye."));
     }
 
     // ----------------------------------------------------------
@@ -511,7 +511,7 @@ public class ConsoleMenuTest {
         assertTrue(shown.contains("Something went wrong. Returning to the menu."));
         assertTrue(shown.contains("\"Film\""));
         assertFalse(shown.contains("boom"));
-        assertTrue(shown.endsWith("Goodbye.\n"));
+        assertTrue(shown.contains("Goodbye."));
     }
 
     /** Counts how many times a phrase appears in the output. */

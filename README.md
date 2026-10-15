@@ -9,9 +9,9 @@ Library Catalogue System (LibCatS) is a cataloguing system that can be used by l
 
 # Reflection
 ## Specification Changes
-...
+The main changes that were made from specification were the implementation of additional methods that weren't initially noted in the specification document. Two examples that were added are `isValidID()` and `isValidSerial()`. These were added to assist in the data verification process to prevent any bad inputs from interfering with the program function.
 ## LinkedChain Changes
-...
+For our purposes, we never had to chain the LinkedChain class methods. Our cataloging system managed to use most of the methods in LinkedChain for its purposes. Any special functions, such as searching for a LibraryItem made by a creator, was implemented in Catalogue.
 ## Unknowns (what happened to what we didn't know how to do)
 ...
 ## What Doesn't Work Yet

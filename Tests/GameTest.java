@@ -1,10 +1,19 @@
 package Tests;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+
+import Classes.Game;
+
 public class GameTest
 {
+    private Game game;
+
     @BeforeEach
     public void setUp()
     {
-        Game game = new Game("The Legend of Zelda: Breath of the Wild", "Nintendo", "An open-world action-adventure game", "Action-Adventure", "Nintendo Switch", "E10+");
+        game = new Game("The Legend of Zelda: Breath of the Wild", "Nintendo", "An open-world action-adventure game", "Action-Adventure", "Nintendo Switch", "E10+");
     }
     /**
      * Tests the getGenre method.
@@ -12,7 +21,7 @@ public class GameTest
     @Test
     public void testGetGenre()
     {
-        assertEqual("Action-Adventure", game.getGenre());
+        assertEquals("Action-Adventure", game.getGenre());
 
     }
     /**
@@ -21,7 +30,7 @@ public class GameTest
     @Test
     public void testGetPlatform()
     {
-        assertEqual("Nintendo Switch", game.getPlatform());
+        assertEquals("Nintendo Switch", game.getPlatform());
 
     }
     /**
@@ -30,7 +39,7 @@ public class GameTest
     @Test
     public void testGetRating()
     {
-        assertEqual("E10+", game.getRating());
+        assertEquals("E10+", game.getRating());
 
     }
     /**
@@ -40,7 +49,7 @@ public class GameTest
     public void testSetGenre()
     {
         game.setGenre("RPG");
-        assertEqual("RPG", game.getGenre());
+        assertEquals("RPG", game.getGenre());
 
     }
     /**
@@ -50,7 +59,7 @@ public class GameTest
     public void testSetPlatform()
     {
         game.setPlatform("PlayStation 5");
-        assertEqual("PlayStation 5", game.getPlatform());
+        assertEquals("PlayStation 5", game.getPlatform());
     }
     /**
      * Tests the setRating method.
@@ -59,6 +68,6 @@ public class GameTest
     public void testSetRating() 
     {
         game.setRating("T");
-        assertEqual("T", game.getRating());
+        assertEquals("T", game.getRating());
     }
 }

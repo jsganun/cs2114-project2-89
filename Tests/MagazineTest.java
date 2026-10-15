@@ -11,7 +11,7 @@ public class MagazineTest
     @BeforeEach
     public void setUp()
     {
-        Magazine magazine = new Magazine("Time", "Time Inc.", "A weekly news magazine", "News", "Vol. 1", "2023-01-01");
+        magazine = new Magazine("Time", "Time Inc.", "A weekly news magazine", "News", "Vol. 1", "2023-01-01");
     }
     /**
      * Tests the getGenre method.

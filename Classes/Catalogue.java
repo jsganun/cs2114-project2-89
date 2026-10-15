@@ -41,7 +41,7 @@ public class Catalogue
         LinkedChain<LibraryItem> itemsByTitle = new LinkedChain<>();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getTitle().equals(title)) {
-                itemsByTitle.add(items.get(i));
+                itemsByTitle.addToEnd(items.get(i));
             }
         }
         return itemsByTitle.toArray(new LibraryItem[itemsByTitle.size()]);
@@ -63,7 +63,7 @@ public class Catalogue
         LinkedChain<LibraryItem> itemsByCreator = new LinkedChain<>();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getCreator().equals(creator)) {
-                itemsByCreator.add(items.get(i));
+                itemsByCreator.addToEnd(items.get(i));
             }
         }
         return itemsByCreator.toArray(new LibraryItem[itemsByCreator.size()]);

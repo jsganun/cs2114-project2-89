@@ -30,7 +30,7 @@ Library Catalogue System (LibCatS) is a cataloguing system that can be used by l
 ...
 ## Responsibilities
 | Member    | Remaining Work    |
-| ---       | ...               |
+| ---       | ---               |
 | Ajeet     | CheckoutRecord: (1) decide whether to keep the blank `CheckoutRecord()` constructor, which Revised Scope item 4 says to remove, and update CheckoutRecordTest to match; (2) align naming with the spec's Data & State (`id` vs. item `serial`) once Catalogue settles on one; (3) add tests that send blank and over-100-character borrower names through `Catalogue.borrowItem` and ConsoleMenu to confirm the backstop messages reach the user. |
 | Jonathan  | ...               |
 | Jacob     | ...               |
@@ -39,19 +39,19 @@ Library Catalogue System (LibCatS) is a cataloguing system that can be used by l
 
 | Class                 | Who did what  | GenAI note    |
 | ---                   | ---           | ---           |
-| CheckoutRecord        | Ajeet Bondugula: wrote (GenAI-assisted). Added borrower and item validation in the constructor and setters, unique chronologically assigned IDs, `getSerial`, `equals`/`hashCode` by item serial, and `toString` | Drafted with Claude (Claude Code) from the spec's CheckoutRecord table, Invariants, and Where Validation Lives sections; reviewed by Ajeet |
-| CheckoutRecordTest    | Ajeet Bondugula: wrote and tested (GenAI-assisted). 17 tests, with a normal case and a bad-input case for every public method, plus tests that store CheckoutRecords in `LinkedChain<CheckoutRecord>`; all pass | Drafted with Claude (Claude Code); reviewed and run by Ajeet |
+| CheckoutRecord        | <strong>Ajeet Bondugula</strong>: wrote (GenAI-assisted). Added borrower and item validation in the constructor and setters, unique chronologically assigned IDs, `getSerial`, `equals`/`hashCode` by item serial, and `toString`<br><br><strong>Jonathan Ganun</strong>: Created the boilerplate using AI. | Drafted with Claude (Claude Code) from the spec's CheckoutRecord table, Invariants, and Where Validation Lives sections; reviewed by Ajeet <br><br> Boilerplate generated using Microsoft Copilot |
+| CheckoutRecordTest    | <strong>Ajeet Bondugula</strong>: wrote and tested (GenAI-assisted). 17 tests, with a normal case and a bad-input case for every public method, plus tests that store CheckoutRecords in `LinkedChain<CheckoutRecord>`; all pass | Drafted with Claude (Claude Code); reviewed and run by Ajeet |
 | Catalogue             | ...           | ...           |
 | CatalogueTest         | ...           | ...           |
-| LibraryItem           | ...           | ...           |
-| LibraryItemTest       | ...           | ...           |
-| Book                  | ...           | ...           |
+| LibraryItem           | <strong>Jonathan Ganun</strong>: Created the boilerplate and JavaDocs comments using AI. Implemented all of the methods by hand.| Used Micorosoft Copilot to generate a boilerplate with JavaDocs comments.|
+| LibraryItemTest       | <strong>Jonathan Ganun</strong>: Created the boilerplate and JavaDocs comments using AI. Implemented all of the methods by hand. Used AI to debug issues with testing.| Used Microsoft Copilot to generate a biolerplate with JavaDocs comments and debug issues with tests. |
+| Book                  | <strong>Jonathan Ganun</strong>: Created the boilerplate using AI. | Used Microsoft Copilot to generate the boilerplate. |
 | BookTest              | ...           | ...           |
-| Device                | ...           | ...           |
+| Device                | <strong>Jonathan Ganun</strong>: Created the boilerplate using AI. | Used Microsoft Copilot to generate the boilerplate. |
 | DeviceTest            | ...           | ...           |
-| DVD                   | ...           | ...           |
+| DVD                   | <strong>Jonathan Ganun</strong>: Created the boilerplate using AI. | Used Microsoft Copilot to generate the boilerplate. |
 | DVDTest               | ...           | ...           |
-| Game                  | ...           | ...           |
+| Game                  | <strong>Jonathan Ganun</strong>: Created the boilerplate using AI. | Used Microsoft Copilot to generate the boilerplate. |
 | GameTest              | ...           | ...           |
-| Magazine              | ...           | ...           |
+| Magazine              | <strong>Jonathan Ganun</strong>: Created the boilerplate using AI. | Used Microsoft Copilot to generate the boilerplate.  |
 | MagazineTest          | ...           | ...           |

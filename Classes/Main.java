@@ -1,16 +1,23 @@
 package Classes;
 
-
+import java.util.Scanner;
 
 public class Main {
     
+    private static Catalogue catalogue;
+    private static Scanner input;
+    private static boolean running;
+
     public static void main(String[] args) {
 
         // Create sample catalogue
-        Catalogue catalogue = createSampleCatalogue();
+        catalogue = createSampleCatalogue();
         
-        // Begin prototype program
+        // Instantiate input
+        input = new Scanner(System.in);
 
+        // Begin prototype program
+        run();
     }
 
     /**
@@ -84,5 +91,142 @@ public class Main {
         
         // Return the sample catalogue
         return catalogue;
+    }
+
+    private static void run() {
+        running = false; // Turn to true after, this is to prevent while true loop for now.
+
+        while (running) {
+            System.out.println("Select an option:");
+            System.out.println("[1] Show all catalogue entries");
+            System.out.println("[2] Show all returned catalogue entries");
+            System.out.println("[3] Show all borrowed catalogue entries");
+            System.out.println("[4] Show all checkout records");
+            System.out.println("[5] Add a new item to the catalogue");
+            System.out.println("[6] Remove an item from the catalogue");
+            System.out.println("[7] Show All Catalogue Entries");
+            System.out.println("[8] Show All Catalogue Entries");
+
+        }
+    }
+
+    private static void showWholeCatalogue() {
+        LibraryItem[] allItems = catalogue.getAllItems();
+
+        if (allItems.length == 0) {
+            System.out.println(
+                "--------------------------------------------------\n" +
+                "There are no items in the catalogue!\n" +
+                "--------------------------------------------------"
+            );
+        }
+        else {
+            System.out.println("--------------------------------------------------");
+            System.out.println("|               All Catalogue Items              |");
+            System.out.println("--------------------------------------------------");
+            for (int i = 0; i < allItems.length; i++) {
+                LibraryItem item = allItems[i];
+                System.out.println(item);
+                if (i + 1 != allItems.length) {
+                    System.out.println("\n");
+                }
+            }
+            System.out.println("--------------------------------------------------");
+        }
+    }
+
+    private static void showReturnedCatalogue() {
+        LibraryItem[] returnedItems = catalogue.getAllReturnedItems();
+
+        if (returnedItems.length == 0) {
+            System.out.println(
+                "--------------------------------------------------\n" +
+                "There are no returned items in the catalogue!\n" +
+                "--------------------------------------------------"
+            );
+        }
+        else {
+            System.out.println("--------------------------------------------------");
+            System.out.println("|               All Returned Items               |");
+            System.out.println("--------------------------------------------------");
+            for (int i = 0; i < returnedItems.length; i++) {
+                LibraryItem item = returnedItems[i];
+                System.out.println(item);
+                if (i + 1 != returnedItems.length) {
+                    System.out.println("\n");
+                }
+            }
+            System.out.println("--------------------------------------------------");
+        }
+    }
+
+    private static void showBorrowedCatalogue() {
+        LibraryItem[] borrowedItems = catalogue.getAllBorrowedItems();
+
+        if (borrowedItems.length == 0) {
+            System.out.println(
+                "--------------------------------------------------\n" +
+                "There are no borrowed items in the catalogue!\n" +
+                "--------------------------------------------------"
+            );
+        }
+        else {
+            System.out.println("--------------------------------------------------");
+            System.out.println("|               All Borrowed Items               |");
+            System.out.println("--------------------------------------------------");
+            for (int i = 0; i < borrowedItems.length; i++) {
+                LibraryItem item = borrowedItems[i];
+                System.out.println(item);
+                if (i + 1 != borrowedItems.length) {
+                    System.out.println("\n");
+                }
+            }
+            System.out.println("--------------------------------------------------");
+        }
+    }
+
+    private static void showCheckoutRecords() {
+        CheckoutRecord[] records = catalogue.getAllCheckoutRecords();
+
+        if (records.length == 0) {
+            System.out.println(
+                "--------------------------------------------------\n" +
+                "There are no checkout records!\n" +
+                "--------------------------------------------------"
+            );
+        }
+        else {
+            System.out.println("--------------------------------------------------");
+            System.out.println("|                Checkout Records                |");
+            System.out.println("--------------------------------------------------");
+            for (int i = 0; i < records.length; i++) {
+                CheckoutRecord record = records[i];
+                System.out.println(record);
+                if (i + 1 != records.length) {
+                    System.out.println("\n");
+                }
+            }
+            System.out.println("--------------------------------------------------");
+        }
+    }
+
+    private static void addItem() {
+
+    }
+
+    private static void removeItem() {
+
+    }
+
+    private static void borrowItem() {
+
+    }
+
+    private static void returnItem() {
+
+    }
+
+    private static void exit() {
+        System.exit(0);
     }
 }

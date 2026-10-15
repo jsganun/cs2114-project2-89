@@ -1,5 +1,7 @@
 package Classes;
 
+import java.util.ArrayList;
+
 /**
  * Holds all LibraryItem and CheckoutRecord objects via LinkedChain.
  * Generates CheckoutRecord objects for available LibraryItem objects.
@@ -63,6 +65,49 @@ public class Catalogue
             }
         }
         return itemsByCreator.toArray(new LibraryItem[itemsByCreator.size()]);
+    }
+
+    /**
+     * Returns an array of all LibraryItems objects in the catalogue
+     * @return an array containing every LibraryItem in the catalogue
+     */
+    public LibraryItem[] getAllItems() {
+        LibraryItem[] arr = new LibraryItem[items.size()];
+        return items.toArray(arr);
+    }
+
+    /**
+     * Returns an array of every LibraryItem that is available
+     * @return an array of every LibraryItem that is available
+     */
+    public LibraryItem[] getAllReturnedItems() {
+        LibraryItem[] allItems = getAllItems();
+        ArrayList<LibraryItem> returnedItems = new ArrayList<LibraryItem>();
+
+        for (LibraryItem item : allItems) {
+            if (item.getRecord() == null) {
+                returnedItems.add(item);
+            }
+        }
+        
+        return (LibraryItem[]) returnedItems.toArray();
+    }
+
+    /**
+     * Returns an array of every LibraryItem that is borrowed
+     * @return an array of every LibraryItem that is borrowed
+     */
+    public LibraryItem[] getAllBorrowedItems() {
+        LibraryItem[] allItems = getAllItems();
+        ArrayList<LibraryItem> borrowedItems = new ArrayList<LibraryItem>();
+
+        for (LibraryItem item : allItems) {
+            if (item.getRecord() != null) {
+                borrowedItems.add(item);
+            }
+        }
+
+        return (LibraryItem[]) borrowedItems.toArray();
     }
 
     /**
@@ -133,6 +178,15 @@ public class Catalogue
     }
 
     /**
+     * Returns an array containing every checkout record
+     * @return an array containing every checkout record
+     */
+    public CheckoutRecord[] getAllCheckoutRecords() {
+        CheckoutRecord[] arr = new CheckoutRecord[records.size()];
+        return records.toArray(arr);
+    }
+
+    /**
      * Creates a CheckoutRecord object given item and borrower arguments
      * and updates the corresponding LibraryItem object accordingly.
      * @param item The LibraryItem being borrowed.
@@ -197,6 +251,7 @@ public class Catalogue
 
     /**
      * Removes a LibraryItem object from the LinkedChain items.
+     * Checks in the item before removing to remove any associated checkout record.
      * @param item The LibraryItem to remove.
      * @throws IllegalArgumentException if item is null
      */
@@ -205,6 +260,7 @@ public class Catalogue
             throw new IllegalArgumentException(
                 "The LibraryItem argument passed to removeItem is null.");
         }
+        returnItem(item);
         items.remove(item);
     }
 

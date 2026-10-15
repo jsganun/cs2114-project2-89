@@ -1,11 +1,21 @@
 
 package Tests;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+
+import Classes.Device;
+
 public class DeviceTest
 {
+    private Device device;
+
     @BeforeEach
     public void setUp()
     {
-        Device device = new Device("Mac","Apple","Computer","Operating System", "Manufacturer", "Model", "DeviceType");
+        device = new Device("Mac","Apple","Computer","Operating System", "Manufacturer", "Model", "DeviceType");
     }
     /**
      * Tests the getManufacturer method.
@@ -13,7 +23,7 @@ public class DeviceTest
     @Test
     public void testGetManufacturer()
     {
-        assertEqual("Manufacturer", device.getBrand());
+        assertEquals("Manufacturer", device.getManufacturer());
 
     }
     /**
@@ -22,7 +32,7 @@ public class DeviceTest
     @Test
     public void testGetOperatingSystem()
     {
-        assertEqual("Operating System", device.getOperatingSystem());
+        assertEquals("Operating System", device.getOperatingSystem());
 
     }
     /**
@@ -31,7 +41,7 @@ public class DeviceTest
     @Test
     public void testGetDeviceType()
     {
-        assertEqual("DeviceType", device.getDeviceType());
+        assertEquals("DeviceType", device.getDeviceType());
 
     }
     /**
@@ -40,7 +50,7 @@ public class DeviceTest
     @Test
     public void testGetModel()
     {
-        assertEqual("Model", device.getModel());
+        assertEquals("Model", device.getModel());
 
     }
     /**
@@ -49,8 +59,8 @@ public class DeviceTest
     @Test
     public void testSetManufacturer()
     {
-        device.setBrand("NewManufacturer");
-        assertEqual("NewManufacturer", device.getBrand());
+        device.setManufacturer("NewManufacturer");
+        assertEquals("NewManufacturer", device.getManufacturer());
 
     }
     /**
@@ -60,7 +70,7 @@ public class DeviceTest
     public void testSetOperatingSystem()
     {
         device.setOperatingSystem("NewOperatingSystem");
-        assertEqual("NewOperatingSystem", device.getOperatingSystem());
+        assertEquals("NewOperatingSystem", device.getOperatingSystem());
 
     }
     /**
@@ -70,7 +80,7 @@ public class DeviceTest
     public void testSetDeviceType()
     {
         device.setDeviceType("NewDeviceType");
-        assertEqual("NewDeviceType", device.getDeviceType());
+        assertEquals("NewDeviceType", device.getDeviceType());
 
     }
     /**
@@ -80,7 +90,7 @@ public class DeviceTest
     public void testSetModel()
     {
         device.setModel("NewModel");
-        assertEqual("NewModel", device.getModel());
+        assertEquals("NewModel", device.getModel());
 
     }
 

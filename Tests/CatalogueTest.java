@@ -48,11 +48,11 @@ public class CatalogueTest {
     public void setUp() {
         catalogue = new Catalogue();
         hobbit = new Book("The Hobbit", "J.R.R. Tolkien", "A fantasy adventure.",
-            "Fantasy", "English", "Hardcover", 310);
+            "Fantasy", "English", "Hardcover","wd", 310);
         copyOne = new Book("Dune", "Frank Herbert", "A desert planet.",
-            "Science Fiction", "English", "Paperback", 412);
+            "Science Fiction", "English", "Paperback", "wd", 412);
         copyTwo = new Book("Dune", "Frank Herbert", "A desert planet.",
-            "Science Fiction", "English", "Paperback", 412);
+            "Science Fiction", "English", "Paperback", "wd",  412);
         planet = new DVD("Planet Earth", "David Attenborough", "Nature.",
             "Documentary", 11);
         zelda = new Game("Zelda", "Nintendo", "Adventure.", "Adventure",
@@ -103,7 +103,7 @@ public class CatalogueTest {
         Catalogue empty = new Catalogue();
         assertThrows(IndexOutOfBoundsException.class, () -> empty.getItem(1));
         assertThrows(IndexOutOfBoundsException.class, () -> empty.getCheckoutRecord(1));
-        LibraryItem stranger = new Book("X", "Y", "", "g", "l", "f", 1);
+        LibraryItem stranger = new Book("X", "Y", "", "g", "l", "f","P", 1);
         assertFalse(empty.removeItem(stranger));
         assertFalse(empty.borrowItem(stranger, "Sam"));
         assertFalse(empty.returnItem(stranger));

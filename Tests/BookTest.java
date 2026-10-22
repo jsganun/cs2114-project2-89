@@ -18,8 +18,27 @@ public class BookTest
     @BeforeEach
     public void setUp()
     {
-        harryPotter = new Book("HarryPotter", "J.K. Rowling", "British Kid", "Fiction", "English", "HardCover", 200 );
+        harryPotter = new Book("HarryPotter", "J.K. Rowling", "British Kid", "Fiction", "English", "HardCover", "Publisher", 200 );
     }
+    /**
+     * Tests that the getter methods return the expected values for the Book object.
+     */
+    @Test
+    public void testGetPublisher()
+    {
+        assertEquals("Publisher", harryPotter.getPublisher());
+
+    }
+    /**
+     * Tests that the setter methods update the values for the Book object.
+     */
+    @Test
+    public void testSetPublisher()
+    {
+        harryPotter.setPublisher("New Publisher");
+        assertEquals("New Publisher", harryPotter.getPublisher());
+
+    } 
     /**
      * Tests that the getter methods return the expected values for the Book object.
      */
@@ -112,6 +131,7 @@ public class BookTest
         assertEquals("Fiction", harryPotter.getGenre());
         assertEquals("English", harryPotter.getLanguage());
         assertEquals("HardCover", harryPotter.getFormat());
+        assertEquals("Publisher", harryPotter.getPublisher());
         assertEquals(200, harryPotter.getPageCount());
         assertEquals(0, harryPotter.getSerial());
     }

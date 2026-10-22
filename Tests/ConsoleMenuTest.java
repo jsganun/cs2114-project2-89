@@ -52,7 +52,7 @@ public class ConsoleMenuTest {
     public void setUp() {
         catalogue = new Catalogue();
         dune = new Book("Dune", "Frank Herbert", "A desert planet.",
-            "Science Fiction", "English", "Paperback", 412);
+            "Science Fiction", "English", "Paperback","ef", 412);
         planet = new DVD("Planet Earth", "David Attenborough", "Nature.",
             "Documentary", 11);
         zelda = new Game("Zelda", "Nintendo", "Adventure.", "Adventure",
@@ -272,7 +272,7 @@ public class ConsoleMenuTest {
     @Test
     public void testAddBook() {
         String shown = run("7\n1\nHobbit\nTolkien\nA hobbit.\nFantasy\nEnglish\n"
-            + "Hardcover\n310\n\n0\n");
+    + "Hardcover\nAllen & Unwin\n310\n\n0\n");
         assertTrue(shown.contains("Added item 4: Hobbit"));
         Book added = (Book) catalogue.getItem(4);
         assertEquals("Fantasy", added.getGenre());
@@ -286,7 +286,7 @@ public class ConsoleMenuTest {
     public void testAddBadInputIsReprompted() {
         String tooLong = "a".repeat(101);
         String shown = run("7\n1\n   \n" + tooLong + "\nHobbit\n\nTolkien\n"
-            + "\nFantasy\nEnglish\nHardcover\nlots\n0\n-3\n310\n\n0\n");
+    + "\nFantasy\nEnglish\nHardcover\nAllen & Unwin\nlots\n0\n-3\n310\n\n0\n");
         // blank title, blank creator (the empty line after is the optional
         // description, which is allowed to be empty)
         assertEquals(2, count(shown, "Text cannot be blank. Please try again."));
@@ -310,7 +310,7 @@ public class ConsoleMenuTest {
     @Test
     public void testAddBookWithIsbn() {
         String shown = run("7\n1\nHobbit\nTolkien\n\nFantasy\nEnglish\nHardcover\n"
-            + "310\n123\n9780547928227\n0\n");
+    + "Allen & Unwin\n310\n123\n9780547928227\n0\n");
         assertTrue(shown.contains("ISBN is not valid. Please try again."));
         assertEquals("9780547928227", ((Book) catalogue.getItem(4)).getIsbn());
     }
@@ -329,11 +329,11 @@ public class ConsoleMenuTest {
     /** All five item types can be added through the menu. */
     @Test
     public void testAddEveryType() {
-        run("7\n1\nB\nC\n\nG\nL\nF\n5\n\n"
-            + "7\n2\nM\nC\n\nG\nV\nD\n\n"
-            + "7\n3\nD\nC\n\nG\n3\n"
-            + "7\n4\nV\nC\n\nOS\nMaker\nModel\nType\n"
-            + "7\n5\nGa\nC\n\nG\nP\nR\n0\n");
+        run("7\n1\nB\nC\n\nG\nL\nF\nP\n5\n\n"
+        + "7\n2\nM\nC\n\nG\nV\nD\n\n"
+        + "7\n3\nD\nC\n\nG\n3\n"
+        + "7\n4\nV\nC\n\nOS\nMaker\nModel\nType\n"
+        + "7\n5\nGa\nC\n\nG\nP\nR\n0\n");
         LibraryItem[] all = catalogue.getAllItems();
         assertEquals(8, all.length);
         assertEquals("Book", all[3].getType());

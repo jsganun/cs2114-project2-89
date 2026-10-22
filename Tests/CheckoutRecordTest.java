@@ -53,7 +53,7 @@ public class CheckoutRecordTest {
     public void setUp() {
         Catalogue catalogue = new Catalogue();
         book = new Book("Dune", "Frank Herbert", "A desert planet.",
-            "Science Fiction", "English", "Paperback", 412);
+            "Science Fiction", "English", "Paperback","ef", 412);
         dvd = new DVD("Planet Earth", "BBC", "Nature documentary.",
             "Documentary", 11);
         catalogue.addItem(book);

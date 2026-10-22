@@ -323,7 +323,7 @@ public class ConsoleMenu
         {
             Book book = new Book(title, creator, description,
                 readNonBlank("Genre: "), readNonBlank("Language: "),
-                readNonBlank("Format (for example Paperback): "),
+                readNonBlank("Format (for example Paperback): "),readNonBlank("Publisher: "),
                 readPositiveInt("Page count: "));
             askIsbn(book);
             item = book;

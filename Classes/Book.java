@@ -19,6 +19,7 @@ public class Book extends LibraryItem
     private int pageCount;
     /** The ISBN with hyphens removed, or empty if none was recorded. */
     private String isbn = "";
+    private String publisher;
 
     /**
      * Creates a new Book.
@@ -42,13 +43,32 @@ public class Book extends LibraryItem
         String genre,
         String language,
         String format,
+        String publisher,
         int pageCount)
     {
         super(title, creator, description);
         this.genre = checkText(genre, "Genre");
         this.language = checkText(language, "Language");
         this.format = checkText(format, "Format");
+
         this.pageCount = checkPositive(pageCount, "Page count");
+        this.publisher = checkText(publisher, "Publisher");
+    }
+    /**    (non-Javadoc)
+     * @return the publisher of the book
+     */
+    public String getPublisher() {
+        return publisher;
+    }
+    /**    (non-Javadoc)
+     * @param publisher the new publisher of the book
+     * @throws IllegalArgumentException if publisher is null or blank;
+     *         the old value is kept
+     * @see Classes.LibraryItem#getType()
+     */
+    public void setPublisher(String publisher)
+    {
+        this.publisher = checkText(publisher, "Publisher");
     }
 
     /**

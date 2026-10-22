@@ -516,7 +516,7 @@ public class Catalogue
      * @throws IllegalArgumentException if text is null or blank
      */
     private void requireSearchText(String text) {
-        if (text == null || text.trim().isEmpty()) {
+        if (text == null || text.trim(  ).isEmpty()) {
             throw new IllegalArgumentException("Text cannot be blank");
         }
     }

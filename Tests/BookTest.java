@@ -12,36 +12,53 @@ import Classes.Book;
 public class BookTest
 {
     private Book harryPotter;
-
+    /**
+     * Sets up a Book object for testing before each test method is run.
+     */
     @BeforeEach
     public void setUp()
     {
         harryPotter = new Book("HarryPotter", "J.K. Rowling", "British Kid", "Fiction", "English", "HardCover", 200 );
     }
+    /**
+     * Tests that the getter methods return the expected values for the Book object.
+     */
     @Test
     public void testGetGenre()
     {
         assertEquals("Fiction", harryPotter.getGenre());
 
     }
+    /**
+     * Tests that the getter methods return the expected values for the Book object.
+     */
     @Test
     public void testGetFormat()
     {
         assertEquals("HardCover", harryPotter.getFormat());
 
     }
+    /**
+     * Tests that the getter methods return the expected values for the Book object.
+     */
     @Test
     public void testGetLanguage()
     {
         assertEquals("English", harryPotter.getLanguage());
 
     }
+    /**
+     * Tests that the getter methods return the expected values for the Book object.
+     */
     @Test
     public void testGetPageCount()
     {
         assertEquals(200, harryPotter.getPageCount());
 
     }
+    /**
+     * Tests that the setter methods update the values for the Book object.
+     */
     @Test
     public void testSetGenre()
     {
@@ -49,6 +66,9 @@ public class BookTest
         assertEquals("Non-Fiction", harryPotter.getGenre());
 
     }
+    /**
+     * Tests that the setter methods update the values for the Book object.
+     */
     @Test
     public void testSetFormat()
     {
@@ -56,6 +76,9 @@ public class BookTest
         assertEquals("SoftCover", harryPotter.getFormat());
 
     }
+    /**
+     * Tests that the setter methods update the values for the Book object.
+     */
     @Test
     public void testSetLanguage()
     {
@@ -63,6 +86,9 @@ public class BookTest
         assertEquals("Spanish", harryPotter.getLanguage());
 
     }
+    /**
+     * Tests that the setter methods update the values for the Book object.
+     */
     @Test
     public void testSetPageCount()
     {
@@ -97,18 +123,20 @@ public class BookTest
     @Test
     public void testConstructorBadInput()
     {
-        assertThrows(IllegalArgumentException.class, () -> new Book("  ", "Creator", "D", "Fiction", "English", "HardCover", 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", null, "D", "Fiction", "English", "HardCover", 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", null, "Fiction", "English", "HardCover", 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("a".repeat(101), "C", "D", "Fiction", "English", "HardCover", 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", null, "English", "HardCover", 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "   ", "English", "HardCover", 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", null, "HardCover", 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "   ", "HardCover", 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", null, 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", "   ", 200));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", "HardCover", 0));
-        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", "HardCover", -5));
+        assertThrows(IllegalArgumentException.class, () -> new Book("  ", "Creator", "D", "Fiction", "English", "HardCover","yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", null, "D", "Fiction", "English", "HardCover","yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", null, "Fiction", "English", "HardCover","yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("a".repeat(101), "C", "D", "Fiction", "English", "HardCover","yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", null, "English", "HardCover","yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "   ", "English", "HardCover","yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", null, "HardCover","yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "   ", "HardCover","yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", null,"yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", "   ","yur", 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", "HardCover","yur", 0));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", "HardCover","yur", -5));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", "HardCover",null, 200));
+        assertThrows(IllegalArgumentException.class, () -> new Book("T", "C", "D", "Fiction", "English", "HardCover"," ", 200));
     }
 
     /**

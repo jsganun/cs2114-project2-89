@@ -182,6 +182,17 @@ public class BookTest
     }
 
     /**
+     * Tests that setPublisher rejects null and blank text and keeps the old value.
+     */
+    @Test
+    public void testSetPublisherBadInput()
+    {
+        assertThrows(IllegalArgumentException.class, () -> harryPotter.setPublisher(null));
+        assertThrows(IllegalArgumentException.class, () -> harryPotter.setPublisher("   "));
+        assertEquals("Publisher", harryPotter.getPublisher());
+    }
+
+    /**
      * Tests that setFormat rejects null and blank text and keeps the old value.
      */
     @Test
@@ -220,7 +231,7 @@ public class BookTest
     {
         assertEquals("Book 0\nTitle: HarryPotter\nCreator: J.K. Rowling\nDescription: British Kid"
             + "\nGenre: Fiction\nLanguage: English\nFormat: HardCover"
-            + "\nPage count: 200\nISBN: N/A",
+            + "\nPublisher: Publisher\nPage count: 200\nISBN: N/A",
             harryPotter.toString());
     }
 
@@ -233,6 +244,7 @@ public class BookTest
         assertTrue(harryPotter.matches("hardcover"));
         assertTrue(harryPotter.matches("rowling"));
         assertTrue(harryPotter.matches("english"));
+        assertTrue(harryPotter.matches("publisher"));
         assertFalse(harryPotter.matches("zebra"));
     }
 

@@ -19,6 +19,7 @@ public class Book extends LibraryItem
     private int pageCount;
     /** The ISBN with hyphens removed, or empty if none was recorded. */
     private String isbn = "";
+    /** The publisher of the book. */
     private String publisher;
 
     /**
@@ -30,6 +31,7 @@ public class Book extends LibraryItem
      * @param genre the genre
      * @param language the language
      * @param format the format (for example Paperback or eBook)
+     * @param publisher the publisher
      * @param pageCount the page count
      * @throws IllegalArgumentException if title or creator is null,
      *         blank, or over 100 characters, if description is null,
@@ -50,21 +52,24 @@ public class Book extends LibraryItem
         this.genre = checkText(genre, "Genre");
         this.language = checkText(language, "Language");
         this.format = checkText(format, "Format");
-
-        this.pageCount = checkPositive(pageCount, "Page count");
         this.publisher = checkText(publisher, "Publisher");
+        this.pageCount = checkPositive(pageCount, "Page count");
     }
-    /**    (non-Javadoc)
-     * @return the publisher of the book
+
+    /**
+     * Returns the publisher of the book.
+     * @return the publisher
      */
-    public String getPublisher() {
+    public String getPublisher()
+    {
         return publisher;
     }
-    /**    (non-Javadoc)
+
+    /**
+     * Sets the publisher of the book.
      * @param publisher the new publisher of the book
      * @throws IllegalArgumentException if publisher is null or blank;
      *         the old value is kept
-     * @see Classes.LibraryItem#getType()
      */
     public void setPublisher(String publisher)
     {
@@ -269,7 +274,7 @@ public class Book extends LibraryItem
     @Override
     protected String searchText()
     {
-        return super.searchText() + " " + genre + " " + language + " " + format + " " + pageCount + " " + isbn;
+        return super.searchText() + " " + genre + " " + language + " " + format + " " + publisher + " " + pageCount + " " + isbn;
     }
 
     /**
@@ -283,6 +288,7 @@ public class Book extends LibraryItem
         "\nGenre: " + genre +
         "\nLanguage: " + language +
         "\nFormat: " + format +
+        "\nPublisher: " + publisher +
         "\nPage count: " + pageCount +
         "\nISBN: " + (hasIsbn() ? isbn : "N/A");
     }

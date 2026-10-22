@@ -1,9 +1,9 @@
 # LibCatS
 Library Catalogue System (LibCatS) is a cataloguing system that can be used by libraries to organize their collection of items efficiently. Through this system, users can browse available items, view item details, and search for specific items. Users can also check out and return items to and from the catalogue. The catalogue maintains a record of all of the items and updates when an action is done. Users interact with this catalogue by entering commands into a console.
 
-Group 89 (cs2114-project2-89). Project 2, Deliverable 3: Prototype + Tests.
+Group 89 (cs2114-project2-89). Project 2, Deliverable 4: Final Build.
 
-**Status:** the program runs on the MVP path with a console menu, one generic `LinkedChain<T>` does all the storage, and **236 JUnit tests pass**. Two scope stretch goals work (extra descriptors with validation, and a waitlist).
+**Status:** the program runs on the MVP path with a console menu, one generic `LinkedChain<T>` does all the storage, and **239 JUnit tests pass**. Two scope stretch goals work (extra descriptors with validation, and a waitlist). The system diagram is in [docs/system-diagram.svg](docs/system-diagram.svg) and below.
 
 ---
 
@@ -27,7 +27,7 @@ java -cp out Classes.Main
 **Run all the tests:**
 
 ```bash
-java -jar lib/junit-platform-console-standalone-1.10.2.jar -cp out --scan-classpath
+java -jar lib/junit-platform-console-standalone-1.10.2.jar execute -cp out --scan-classpath
 ```
 
 **In Eclipse:** the project already has `.classpath` set up with the JUnit jar. Run `Classes/Main.java` as a Java Application, and run the `Tests` package with *Run As > JUnit Test*.
@@ -46,6 +46,14 @@ java -jar lib/junit-platform-console-standalone-1.10.2.jar -cp out --scan-classp
 ```
 
 Items are found by **serial number** (shown in square brackets in the lists). Search can look by title, creator, serial number, or *any attribute* (genre, platform, description, ISBN, and so on). Press Ctrl+D at any prompt to leave cleanly.
+
+---
+
+## System diagram
+
+![LibCatS system diagram](docs/system-diagram.svg)
+
+`Main` starts `ConsoleMenu`, which calls `Catalogue`. `Catalogue` keeps all of its data in three `LinkedChain` objects, and `ConsoleMenu` keeps a fourth for recent activity. All four are the same generic class, `LinkedChain<T>`, holding four element types: `LibraryItem` (with five subclasses in one chain), `CheckoutRecord`, `WaitlistEntry`, and `String`. The application classes call it only through its public methods.
 
 ---
 
@@ -102,16 +110,16 @@ That is **four different element types, plus five concrete item classes in one c
 | Abstract class or interface for the item types? | **Figured out: abstract class.** An interface cannot hold the shared title, creator and serial, so five subclasses would repeat them, and an abstract class lets `equals` and validation be written once. `getType()` is the abstract method; each subclass overrides it, `toString` and `searchText`. **[Group]** decision, after asking GenAI the tradeoff question. |
 | How to write `equals()` so removal works when two copies share a title? | **Figured out.** `LibraryItem.equals` and `hashCode` use the serial only (an item with no serial yet equals only itself), and `CheckoutRecord.equals` uses the serial. `CatalogueTest.testRemoveItemOneOfTwoCopies` removes one of two copies of the same book and checks the other is untouched. The first build overrode `equals` without `hashCode`; fixed. |
 | How to handle bad input and a closed input stream with `Scanner`, including `InputMismatchException`? | **Figured out.** `ConsoleMenu` only reads with `hasNextLine` and `nextLine` and converts numbers with `Integer.parseInt`, catching `NumberFormatException`, so there is no `InputMismatchException` and no bad token left in the buffer. A closed or empty stream (or a closed `Scanner`) becomes a private `EndOfInput` exception that `run()` turns into "Goodbye." and a normal return. Covered by `testNonNumericChoice`, `testRunEmptyInputStream`, `testRunClosedScanner`, `testRunInputEndsMidCommand`. |
-| How to split the program so the menu code stays separate from the chain? | **Figured out.** `LinkedChain` stores only; `Catalogue` holds the rules; `LibraryItem` and the subclasses describe themselves; `CheckoutRecord` and `WaitlistEntry` hold single facts; `ConsoleMenu` is the only class that reads or prints; `Main` wires them together. Owners are in the Responsibilities table. |
+| How to split the program so the menu code stays separate from the chain? | **Figured out.** `LinkedChain` stores only; `Catalogue` holds the rules; `LibraryItem` and the subclasses describe themselves; `CheckoutRecord` and `WaitlistEntry` hold single facts; `ConsoleMenu` is the only class that reads or prints; `Main` wires them together. Who wrote what is in the Attribution table. |
 | Biggest risk: getting `LinkedChain` right. | **Handled.** `LinkedChainTest` (28 tests) covers every public method, with the first, last and only entry removed one by one. It found no bugs in the provided chain, and the tail reference we added passes the same tests. |
 
 **Still open:** saving and loading a file, and due dates, are scope stretch goals we did not build (see Next Steps). The scope says `LocalDate` is "in the java.lang package"; it is actually `java.time.LocalDate`, so the import will be different when we build due dates.
 
 ## What Doesn't Work Yet
 
-* **Not built:** the stretch goals "save and load the catalogue to a file" and "due dates with an overdue report". The catalogue resets to the sample data every time the program starts.
+* **Not built:** the stretch goals "save and load the catalogue to a file" (dropped on purpose) and "due dates with an overdue report" (planned, not finished). The catalogue resets to the sample data every time the program starts.
 * There is **no menu command to edit an item** after it is added. The setters exist and are tested, but the menu cannot reach them, so a mistyped ISBN or genre can only be fixed by removing and re-adding the item.
-* `Book` has an ISBN but not the `publisher` the scope mentions; `Magazine` has a date of issue but not the "type of information" (Lifestyle, Sports) beyond `genre`.
+* `Book` has an ISBN and a `publisher`; `Magazine` has a date of issue but not the "type of information" (Lifestyle, Sports) beyond `genre`.
 * **Searching by title or creator needs the whole title or name** (ignoring case). Partial words are found through "any attribute" search (option 6, then 4).
 * **Speed:** the lists in options 1 to 3 and `getAllReturnedItems` / `getAllBorrowedItems` are O(n times r), because each item looks for its record in the records chain. That is fine at library scale but not O(n).
 * `Catalogue` decides "is this item in the catalogue" with `items.contains`, which compares serials. This is safe with one `Catalogue` per program (as in `Main`), but an item from a second `Catalogue` that has the same serial would be treated as present.
@@ -178,59 +186,25 @@ Each case from the scope gets the response the spec's Where Validation Lives sec
 
 ---
 
-# Next Steps
+# Final Status
 
-The MVP from the scope is finished and tested (add and remove items with title, creator and serial; summary with availability; details of one item; search by title, serial or other attributes; separate available and checked-out categories; who has each item). What is left is polish, the stretch goals we commit to, and getting every teammate ready for the grading session.
-
-## Remaining Work
-In the order we will do it:
-
-1. **Everyone:** read and be able to explain the code you own, run the tests, and run the program once, before the grading session (this revision changed every class). Owners are in the table below.
-2. **Zayd:** add the missing scope descriptors: `Book.publisher` and a Magazine "type of information" check, using the same validation pattern as `genre`. Add a constructor-style bad-input test for each.
-3. **Jonathan:** add a menu command "Edit an item" (change title, creator, description, or a descriptor) that calls the existing validated setters and re-prompts on bad input.
-4. **Ajeet:** add a due date to `CheckoutRecord` (a `java.time.LocalDate`, validated as a real date, default 14 days after checkout) so the overdue report can work.
-5. **Jacob:** add `Catalogue.getOverdueRecords(LocalDate today)` and make the "available / checked out" categories O(n + r) if time allows.
-6. **Jonathan:** add the "Overdue report" menu command.
-7. **Everyone:** update the spec document and UML to include `ConsoleMenu`, `WaitlistEntry`, `searchItems`, the due-date methods, and the Big-O table, then re-run all tests and the Big-O table before the final.
+The MVP from the scope is finished and tested (add and remove items with title, creator and serial; summary with availability; details of one item; search by title, serial or other attributes; separate available and checked-out categories; who has each item).
 
 ## Stretch Goals
 From the four in our scope:
 
-### Committed
-* **Extra descriptors with validation** (ISBN for books with the check-digit rule, date of issue for magazines checked for being a real date): **already built and working** (`Book.setIsbn`, `Book.isValidIsbn`, `Magazine.setDateOfIssue`, `Magazine.isValidDate`; add flow in the menu asks for them and re-prompts on bad input).
-* **Waitlist for checked-out items** (a queue of waiting borrowers per item and a notice to the next person on return): **already built and working** (`WaitlistEntry`, `Catalogue.joinWaitlist`, `getWaitlist`, `getNextInLine`; menu option 11; the notice is printed when an item is returned; the first person in line has the item held for them).
-* **Due dates with an overdue report:** committed for the final (steps 4 to 6 above).
+* **Extra descriptors with validation: built and working.** ISBN for books with the check-digit rule, `Book.publisher`, and date of issue for magazines checked for being a real date (`Book.setIsbn`, `Book.isValidIsbn`, `Book.setPublisher`, `Magazine.setDateOfIssue`, `Magazine.isValidDate`). The add flow in the menu asks for them and re-prompts on bad input.
+* **Waitlist for checked-out items: built and working.** A queue of waiting borrowers per item and a notice to the next person on return (`WaitlistEntry`, `Catalogue.joinWaitlist`, `getWaitlist`, `getNextInLine`; menu option 11).
+* **Due dates with an overdue report: not built.** We planned it in Deliverable 3 and ran out of time.
+* **Save and load the catalogue to a file: dropped.** Reading and parsing a file correctly and handling a missing or corrupted file is the largest of the four goals.
 
-### Dropped
-* **Save and load the catalogue to a file.** Reading and parsing a file correctly and handling a missing or corrupted file is the largest of the four goals, and the catalogue is rebuilt from sample data each run. We are dropping it so we have time to make the other three solid.
-
-## New Tests
-The added work must be covered by these tests (the names we will use):
-
-| Work | Normal case | Bad-input case |
-| --- | --- | --- |
-| `Book.publisher` | `BookTest.testSetPublisher` | `BookTest.testSetPublisherBadInput` (null, blank) |
-| Magazine "type of information" | `MagazineTest.testSetInfoType` | `MagazineTest.testSetInfoTypeBadInput` |
-| Edit an item (menu) | `ConsoleMenuTest.testEditItem` | `ConsoleMenuTest.testEditItemBadInput` (blank, over 100, serial that matches nothing) |
-| Due date | `CheckoutRecordTest.testGetDueDate`, `testSetDueDate` | `CheckoutRecordTest.testSetDueDateBadInput` (null, a date before checkout) |
-| Overdue records | `CatalogueTest.testGetOverdueRecords` | `CatalogueTest.testGetOverdueRecordsNoneOverdue`, `testGetOverdueRecordsBadInput` (null date), empty catalogue |
-| Overdue report (menu) | `ConsoleMenuTest.testShowOverdueReport` | `ConsoleMenuTest.testShowOverdueReportNoneOverdue` |
-
-## Responsibilities
-Owners follow the Division of Work in our specification (Ajeet: CheckoutRecord; Jacob: Catalogue; Jonathan: LibraryItem; Zayd: the five subclasses), with the menu and `Main` going to Jonathan because he wrote `Main`.
-
-| Member    | Remaining Work    |
-| ---       | ---               |
-| Ajeet     | Step 1. Step 4: due date in `CheckoutRecord`, with `CheckoutRecordTest.testGetDueDate`, `testSetDueDate`, `testSetDueDateBadInput`. Step 7: README and spec update (Reflection, Big-O). The three items from the earlier plan are **done**: the blank `CheckoutRecord()` constructor was removed, the record now holds `serial` (not `id` plus item), and blank and over-100-character borrower names are tested through `Catalogue.borrowItem` and the menu (`CatalogueTest.testBorrowItemBadInput`, `ConsoleMenuTest.testBorrowItemBadInput`). |
-| Jonathan  | Step 1. Step 3: "Edit an item" command and tests. Step 6: "Overdue report" command and tests. Owns `LibraryItem`, `ConsoleMenu` and `Main`. |
-| Jacob     | Step 1. Step 5: `Catalogue.getOverdueRecords`, with its tests, and the O(n + r) categories. Owns `Catalogue` and `CatalogueTest`. |
-| Zayd      | Step 1. Step 2: `Book.publisher` and the Magazine "type of information", with the tests above. Owns the five subclasses and their tests. |
+Also not built from the Deliverable 3 plan: a menu command to edit an item after it is added (the validated setters exist and are tested), and a separate "type of information" for `Magazine`.
 
 ---
 
 # Attribution
 
-Each member's own contributions are described in the separate contributions document we are submitting. This table lists who worked on each file and how, from the git history and each teammate's notes. "GenAI-assisted" marks work that was drafted or revised with GenAI help; see the GenAI note below the table.
+This table lists who worked on each file and how, from the git history and each teammate's notes. "GenAI-assisted" marks work that was drafted or revised with GenAI help; see the GenAI note below the table.
 
 | Class / test file | Who worked on it and how | GenAI note |
 | --- | --- | --- |
@@ -238,29 +212,30 @@ Each member's own contributions are described in the separate contributions docu
 | LinkedChainTest | <strong>Group 89</strong>: 28 tests with a normal and a bad-input case for every public method, and the first, last and only entry removed one by one. | GenAI-assisted. |
 | LibraryItem | <strong>Jonathan Ganun</strong>: boilerplate and JavaDocs; implemented the methods by hand.<br><strong>Group 89</strong>: revised to match the spec: abstract class with `getType()`, no no-argument constructor, `record` field removed, validation of title, creator and description, `matches`, `summary`, `hashCode`. | Copilot for the original boilerplate|
 | LibraryItemTest | <strong>Jonathan Ganun</strong>: original tests (boilerplate, JavaDocs, debugging with AI).<br><strong>Group 89</strong>: rewritten around a small stub subclass; added bad-input tests for the constructor, setters, `matches`, `equals` and `hashCode`. | Copilot for the original|
-| Book | <strong>Jonathan Ganun</strong>: boilerplate.<br><strong>Zayd Pathan</strong>: getters and setters (git history).<br><strong>Group 89</strong>: validation in the constructor and setters, `getType`, `toString`, and the optional ISBN with the check-digit rule. | Copilot for the boilerplate|
-| BookTest | <strong>Zayd Pathan</strong>: the eight getter and setter tests.<br><strong>Group 89</strong>: added constructor, bad-input, `toString`, `matches` and ISBN tests.  |
+| Book | <strong>Jonathan Ganun</strong>: boilerplate.<br><strong>Zayd Pathan</strong>: getters and setters (git history); added the `publisher` field, getter and setter.<br><strong>Group 89</strong>: validation in the constructor and setters, `getType`, `toString`, and the optional ISBN with the check-digit rule.<br><strong>Final build</strong>: publisher added to `toString` and keyword search, Javadoc fixed. | Copilot for the boilerplate|
+| BookTest | <strong>Zayd Pathan</strong>: the getter and setter tests, including the publisher tests and the publisher cases in the constructor test.<br><strong>Group 89</strong>: added constructor, bad-input, `toString`, `matches` and ISBN tests.<br><strong>Final build</strong>: `testSetPublisherBadInput`, publisher in the `toString` and `matches` tests. | GenAI-assisted (Claude Code wrote the bad-input, `toString`, `matches` and ISBN tests). |
 | Magazine | <strong>Jonathan Ganun</strong>: boilerplate.<br><strong>Group 89</strong>: validation, `getType`, `toString`, and the optional validated date of issue. | Copilot for the boilerplate; GenAI-assisted revision. |
-| MagazineTest | <strong>Zayd Pathan</strong>: the six getter and setter tests.<br><strong>Group 89</strong>: added constructor, bad-input, `toString`, `matches` and date tests.  |
+| MagazineTest | <strong>Zayd Pathan</strong>: the six getter and setter tests.<br><strong>Group 89</strong>: added constructor, bad-input, `toString`, `matches` and date tests. | GenAI-assisted (Claude Code wrote the added tests). |
 | DVD | <strong>Jonathan Ganun</strong>: boilerplate.<br><strong>Group 89</strong>: validation, `getType`, `toString`. | Copilot for the boilerplate; GenAI-assisted revision. |
-| DVDTest | <strong>Zayd Pathan</strong>: the four getter and setter tests.<br><strong>Group 89</strong>: added constructor, bad-input, `toString` and `matches` tests.  |
+| DVDTest | <strong>Zayd Pathan</strong>: the four getter and setter tests.<br><strong>Group 89</strong>: added constructor, bad-input, `toString` and `matches` tests. | GenAI-assisted (Claude Code wrote the added tests). |
 | Device | <strong>Jonathan Ganun</strong>: boilerplate.<br><strong>Group 89</strong>: validation, `getType`, `toString`. | Copilot for the boilerplate; GenAI-assisted revision. |
-| DeviceTest | <strong>Zayd Pathan</strong>: the eight getter and setter tests.<br><strong>Group 89</strong>: added constructor, bad-input, `toString` and `matches` tests. |
-| Game | <strong>Jonathan Ganun</strong>: boilerplate.<br><strong>Group 89</strong>: validation, `getType`, `toString`. | Copilot for the boilerplate;|
-| GameTest | <strong>Zayd Pathan</strong>: the six getter and setter tests.<br><strong>Group 89</strong>: added constructor, bad-input, `toString` and `matches` tests. |
-| CheckoutRecord | <strong>Ajeet Bondugula</strong>: borrower and item validation, `getSerial`, `equals` and `hashCode` by serial, `toString`.<br><strong>Jonathan Ganun</strong>: boilerplate.<br><strong>Group 89</strong>: revised to the spec's serial-based record (blank constructor, `id` and `item` removed). | Copilot for the boilerplate; drafted from the spec and reviewed by Ajeet;  |
-| CheckoutRecordTest | <strong>Ajeet Bondugula</strong>: 17 tests, a normal and a bad-input case for every public method, plus tests that store records in `LinkedChain<CheckoutRecord>`.<br><strong>Group 89</strong>: updated for the serial-based record.  |
+| DeviceTest | <strong>Zayd Pathan</strong>: the eight getter and setter tests.<br><strong>Group 89</strong>: added constructor, bad-input, `toString` and `matches` tests. | GenAI-assisted (Claude Code wrote the added tests). |
+| Game | <strong>Jonathan Ganun</strong>: boilerplate.<br><strong>Group 89</strong>: validation, `getType`, `toString`. | Copilot for the boilerplate; GenAI-assisted revision. |
+| GameTest | <strong>Zayd Pathan</strong>: the six getter and setter tests.<br><strong>Group 89</strong>: added constructor, bad-input, `toString` and `matches` tests. | GenAI-assisted (Claude Code wrote the added tests). |
+| CheckoutRecord | <strong>Ajeet Bondugula</strong>: borrower and item validation, `getSerial`, `equals` and `hashCode` by serial, `toString`.<br><strong>Jonathan Ganun</strong>: boilerplate.<br><strong>Group 89</strong>: revised to the spec's serial-based record (blank constructor, `id` and `item` removed). | Copilot for the boilerplate; drafted from the spec with Claude and reviewed by Ajeet. |
+| CheckoutRecordTest | <strong>Ajeet Bondugula</strong>: 17 tests, a normal and a bad-input case for every public method, plus tests that store records in `LinkedChain<CheckoutRecord>`.<br><strong>Group 89</strong>: updated for the serial-based record. | Claude to refine the tests; GenAI-assisted update. |
 | WaitlistEntry | <strong>Group 89</strong>: new class for the waitlist stretch goal (serial and borrower, validated like `CheckoutRecord`). | GenAI-assisted draft. |
 | WaitlistEntryTest | <strong>Group 89</strong>: a normal and a bad-input case for every public method. | GenAI-assisted. |
 | Catalogue | <strong>Jacob Mapa</strong>: wrote the original methods.<br><strong>Jonathan Ganun</strong>: fixed the title and creator searches; added `getAllItems`, `getAllReturnedItems`, `getAllBorrowedItems`, `getAllCheckoutRecords`.<br><strong>Group 89</strong>: revised to the spec: serials assigned here, `IllegalStateException` for broken rules, O(n) searches, `searchItems`, the waitlist. | GenAI-assisted revision. |
-| CatalogueTest | <strong>Jacob Mapa</strong>: the original nine tests.<br><strong>Group 89</strong>: extended to 42 tests (five item types, empty catalogue, removing an item that is not there, duplicate copies, waitlist). | |
-| ConsoleMenu | <strong>Group 89</strong>: new class, the only one that reads or prints; list layouts adapted from Jonathan's `Main`. |
+| CatalogueTest | <strong>Jacob Mapa</strong>: the original nine tests.<br><strong>Group 89</strong>: extended to 42 tests (five item types, empty catalogue, removing an item that is not there, duplicate copies, waitlist). | GenAI-assisted extension. |
+| ConsoleMenu | <strong>Group 89</strong>: new class, the only one that reads or prints; list layouts adapted from Jonathan's `Main`.<br><strong>Zayd Pathan</strong>: added the publisher prompt for books. | GenAI-assisted (Claude Code drafted it). |
 | ConsoleMenuTest | <strong>Group 89</strong>: 39 tests that type scripts of lines into the menu for every bad-input case in the scope. | GenAI-assisted. |
-| Main | <strong>Jonathan Ganun</strong>: the first `Main`, the sample catalogue, and the list displays.<br><strong>Group 89</strong>: `Main` now hands the catalogue to `ConsoleMenu`. |
+| Main | <strong>Jonathan Ganun</strong>: the first `Main`, the sample catalogue, and the list displays.<br><strong>Group 89</strong>: `Main` now hands the catalogue to `ConsoleMenu`.<br><strong>Zayd Pathan</strong>: added a publisher to each sample book (values corrected in the final build). | GenAI-assisted revision. |
 | MainTest | <strong>Group 89</strong>: tests the sample catalogue (five item types in one chain) and that `Main` starts and exits cleanly. | GenAI-assisted. |
 
 ## GenAI note
 
 * Jonathan used **Microsoft Copilot** for boilerplate, JavaDocs and debugging tests. Ajeet used **Claude** to draft parts of the specification and to refine the `CheckoutRecord` tests.
-* After the first build, **Claude Code** was used to compare it with our scope and specification, and make the revisions listed above, including `ConsoleMenu`, `WaitlistEntry` and some added tests. All 236 tests were run and pass.
-* Decisions that need the group's agreement: following the spec's convention (not its method table) for `borrowItem` and `returnItem`; the committed and dropped stretch goals; and the owners in Responsibilities. Everyone should read the files they own before the grading session.
+* After the first build, **Claude Code** was used to compare it with our scope and specification, and make the revisions listed above, including `ConsoleMenu`, `WaitlistEntry` and some added tests. All 236 tests passed at that point.
+* For the final build, **Claude Code** audited the repository against the Deliverable 4 checklist, added `docs/system-diagram.svg`, finished the `publisher` work (searching, display, tests, sample data), and updated this README.
+* Decisions the group made: following the spec's convention (not its method table) for `borrowItem` and `returnItem`, and which stretch goals were built or dropped (see Final Status). Everyone should read the files they own before the grading session.

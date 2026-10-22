@@ -38,15 +38,15 @@ public class Main {
         // Load sample items into the catalogue
         Book hobbit = new Book("The Hobbit", "J.R.R. Tolkien",
             "A fantasy adventure in Middle-earth.", "Fantasy", "English",
-            "Hardcover"," yur", 310);
+            "Hardcover", "Houghton Mifflin", 310);
         hobbit.setIsbn("978-0-547-92822-7");
         catalogue.addItem(hobbit);
         catalogue.addItem(new Book("Kindred", "Octavia E. Butler",
             "A science-fiction novel about time travel and family.",
-            "Science Fiction", "English", "Paperback"," yur", 264));
+            "Science Fiction", "English", "Paperback", "Beacon Press", 264));
         catalogue.addItem(new Book("The Left Hand of Darkness", "Ursula K. Le Guin",
             "An envoy visits a world with an unusual society.",
-            "Science Fiction", "English", "Paperback","DC", 304));
+            "Science Fiction", "English", "Paperback", "Ace Books", 304));
 
         catalogue.addItem(new DVD("Planet Earth", "David Attenborough",
             "A documentary series exploring Earth's ecosystems.",

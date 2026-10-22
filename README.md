@@ -3,7 +3,7 @@ Library Catalogue System (LibCatS) is a cataloguing system that can be used by l
 
 Group 89 (cs2114-project2-89). Project 2, Deliverable 4: Final Build.
 
-**Status:** the program runs on the MVP path with a console menu, one generic `LinkedChain<T>` does all the storage, and **239 JUnit tests pass**. Two scope stretch goals work (extra descriptors with validation, and a waitlist). The system diagram is in [docs/system-diagram.svg](docs/system-diagram.svg) and below.
+**Status:** the program runs on the MVP path with a console menu, one generic `LinkedChain<T>` does all the storage, and **239 JUnit tests pass**. Two scope stretch goals work (extra descriptors with validation, and a waitlist). The system diagram is in [docs/system-diagram.png](docs/system-diagram.png) and below.
 
 ---
 
@@ -51,7 +51,7 @@ Items are found by **serial number** (shown in square brackets in the lists). Se
 
 ## System diagram
 
-![LibCatS system diagram](docs/system-diagram.svg)
+![LibCatS system diagram](docs/system-diagram.png)
 
 `Main` starts `ConsoleMenu`, which calls `Catalogue`. `Catalogue` keeps all of its data in three `LinkedChain` objects, and `ConsoleMenu` keeps a fourth for recent activity. All four are the same generic class, `LinkedChain<T>`, holding four element types: `LibraryItem` (with five subclasses in one chain), `CheckoutRecord`, `WaitlistEntry`, and `String`. The application classes call it only through its public methods.
 
